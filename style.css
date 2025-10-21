@@ -1,0 +1,182 @@
+body {
+    font-family: 'Montserrat', sans-serif;
+}
+
+/* Створюємо наш кастомний клас з градієнтом */
+.bg-custom-red {
+    /* Запасний колір (темно-синій) */
+    background-color: #00008B; 
+    
+    /* Оновлений градієнт: зліва направо (to right), 
+       від голубого (#87CEEB) до темно-синього (#00008B) */
+    background-image: linear-gradient(to right, #87CEEB, #00008B);
+}
+
+/* ================================================= */
+/* (ОНОВЛЕНО) Логотип                           */
+/* ================================================= */
+.logo {
+    height: 60px; /* Збільшили висоту з 50px до 60px */
+    width: auto;
+    transition: opacity 0.2s;
+    
+    /* "Фокус" з негативними відступами:
+       Зображення стає 60px, але у "потоці" сторінки 
+       займає 50px (60 - 5 - 5). Це не дає хедеру
+       збільшитись у висоту.
+    */
+    margin-top: -5px;
+    margin-bottom: -5px;
+}
+
+/* Робимо логотип-посилання трохи прозорішим при наведенні */
+a .logo:hover {
+    opacity: 0.8;
+}
+
+/* ================================================= */
+/* (ОНОВЛЕНО) Навігація (Кнопки)                */
+/* ================================================= */
+
+.main-nav .btn.btn-outline-light {
+    border: none; /* Прибираємо квадратну рамку */
+}
+
+.main-nav .btn.btn-outline-light:hover {
+    /* Ефект при наведенні (стає ледь помітним фон) */
+    background-color: rgba(255, 255, 255, 0.2) !important; 
+    color: white;
+}
+
+.main-nav .btn.btn-outline-light:focus {
+    box-shadow: none; /* Прибирає синю рамку при кліку */
+}
+
+
+/* ================================================= */
+/* Карусель (без змін)                          */
+/* ================================================= */
+
+#photoCarousel {
+    max-width: 700px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.carousel-image {
+    /* Стилі max-height та object-fit видалено, щоб фото 1:1 не обрізались */
+}
+
+/* ================================================= */
+/* Адаптивність хедера (без змін)                 */
+/* ================================================= */
+@media (max-width: 576px) {
+    .main-nav {
+        display: flex;
+        flex-direction: column;
+        gap: 5px; 
+    }
+    
+    .logo-wrapper[style*="visibility: hidden"] {
+        display: none;
+    }
+
+    .d-flex.justify-content-between.align-items-center {
+        flex-direction: column;
+        gap: 15px;
+    }
+}
+
+/* ================================================= */
+/* Стилі для сторінки Відео (без змін)              */
+/* ================================================= */
+
+.video-card {
+    transition: box-shadow 0.2s ease-in-out;
+    border: none; 
+}
+
+.video-card:hover {
+    box-shadow: 0 .5rem 1rem rgba(0,0,0,.15) !important;
+}
+
+.video-card .card-img-top {
+    border-top: 1px solid #dee2e6;
+}
+
+.video-card .card-title {
+    font-weight: 600;
+    margin-bottom: 0; 
+    background-color: #f8f9fa; 
+}
+.main-nav .btn {
+    font-family: 'Montserrat', sans-serif;
+    /* (fw-bold) ми вже додали через HTML, але можна керувати і звідси */
+    font-weight: 700; 
+}
+/* ================================================= */
+/* (НОВЕ) Стилі для шрифтів футера                   */
+/* ================================================= */
+
+/* Застосовуємо кастомний шрифт до всього футера */
+footer.bg-custom-red {
+    font-family: 'Montserrat', sans-serif;
+}
+
+/* Робимо заголовок "Соц мережі" жирним */
+footer .h5 {
+    font-weight: 700; /* 700 - це те саме, що "bold" */
+}
+
+/* Робимо посилання на соц. мережі жирними */
+footer .social-links a {
+    font-weight: 700;
+}
+/* ================================================= */
+/* (ОНОВЛЕНО) Стилі для сторінки Відео (Фото + Відео) */
+/* ================================================= */
+
+.video-card {
+    transition: box-shadow 0.2s ease-in-out;
+    border: none; 
+}
+
+.video-card:hover {
+    box-shadow: 0 .5rem 1rem rgba(0,0,0,.15) !important;
+}
+
+/* Стиль для назви (без змін) */
+.video-card .card-title {
+    font-weight: 600;
+    margin-bottom: 0; 
+    background-color: #f8f9fa; 
+}
+
+/* (ОНОВЛЕНО) Стилі для ФОТО-заглушок (робимо їх 16:9) */
+.video-card .card-img-top {
+    border-top: 1px solid #dee2e6; /* Залишаємо рамку-лінію */
+    
+    /* Нові стилі для 16:9 */
+    aspect-ratio: 16 / 9;
+    object-fit: cover; /* Це обріже ваше квадратне фото, щоб воно вписалось у 16:9 */
+    width: 100%;
+}
+
+/* Стилі для ВІДЕО-плеєра (16:9 і БЕЗ рамки) */
+.embed-responsive-container {
+    position: relative;
+    padding-bottom: 56.25%; /* 16:9 */
+    height: 0;
+    overflow: hidden;
+    max-width: 100%;
+    
+    /* Тут НЕМАЄ border-top */
+}
+
+.embed-responsive-container iframe {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+}
