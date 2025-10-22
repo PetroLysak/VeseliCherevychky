@@ -1,12 +1,9 @@
 // Чекаємо, поки сторінка завантажиться
 document.addEventListener('DOMContentLoaded', () => {
-    // Знаходимо контейнер, в якому лежать слайди
-    // Важливо: цей код спрацює тільки на index.html, 
-    // де існує #photoCarousel. На інших сторінках він просто
-    // нічого не зробить і не викличе помилки, бо carouselInner буде null.
+    
+    // === Логіка для РАНДОМНОЇ КАРУСЕЛІ (на index.html) ===
     const carouselInner = document.querySelector('#photoCarousel .carousel-inner');
     
-    // Перевіряємо, чи ми взагалі на сторінці з каруселлю
     if (carouselInner) {
         // Збираємо всі слайди в один масив
         const slides = Array.from(carouselInner.querySelectorAll('.carousel-item'));
@@ -41,4 +38,48 @@ document.addEventListener('DOMContentLoaded', () => {
             }
         });
     }
+
+    
+    // === Кнопка "Наверх" ===
+    
+    // 1. Знаходимо кнопку
+    const scrollTopBtn = document.getElementById('scrollToTopBtn');
+
+    // 2. Перевіряємо, чи кнопка існує на сторінці
+    if (scrollTopBtn) {
+        
+        // 3. Функція, яка показує/ховає кнопку
+        const scrollFunction = () => {
+            // Показуємо кнопку, якщо прокрутили більше 100px
+            if (document.body.scrollTop > 100 || document.documentElement.scrollTop > 100) {
+                
+                scrollTopBtn.style.visibility = 'visible';
+                
+                // (ОНОВЛЕНО) Встановлюємо прозорість 0.1 (10%)
+                scrollTopBtn.style.opacity = '0.1'; 
+            
+            } else {
+                
+                scrollTopBtn.style.visibility = 'hidden';
+                scrollTopBtn.style.opacity = '0';
+            }
+        };
+
+        // 4. Додаємо слухача події "scroll"
+        window.onscroll = () => {
+            scrollFunction();
+        };
+
+        // 5. Функція, яка прокручує сторінку наверх
+        const topFunction = () => {
+            window.scrollTo({
+                top: 0,
+                behavior: 'smooth' // Плавна прокрутка
+            });
+        };
+
+        // 6. Додаємо слухача події "click"
+        scrollTopBtn.addEventListener('click', topFunction);
+    }
+
 });
