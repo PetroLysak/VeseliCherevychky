@@ -139,3 +139,62 @@ footer .h5 {
 footer .social-links a {
     font-weight: 700;
 }
+
+/* ================================================= */
+/* (ОНОВЛЕНО) Кнопка "Наверх"                        */
+/* ================================================= */
+
+#scrollToTopBtn {
+    /* Кнопка ховається через opacity та visibility (керується з JS) */
+    display: flex; 
+    visibility: hidden;
+    opacity: 0;
+    
+    position: sticky; 
+    bottom: 20px;
+    float: right; 
+    margin-right: 20px;
+    z-index: 99;
+    
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    background-color: #f1f1f1; 
+    color: #333; 
+    
+    border: none;
+    outline: none;
+    cursor: pointer;
+    
+    /* Flexbox для ідеального центрування псевдо-елемента */
+    align-items: center;
+    justify-content: center;
+
+    /* Ми прибрали звідси font-size і line-height */
+    
+    transition: opacity 0.3s, visibility 0.3s;
+}
+
+/* (НОВИЙ БЛОК) Малюємо стрілку і центруємо її */
+#scrollToTopBtn::before {
+    content: '\2191'; /* Це Unicode-символ для &uarr; */
+    font-size: 42px; /* Ваш великий розмір */
+    font-weight: bold;
+    
+    /* (ГОЛОВНЕ ВИПРАВЛЕННЯ) "Підштовхуємо" стрілку вгору */
+    position: relative;
+    top: -3px; /* Спробуйте -2px або -4px, якщо -3px буде не ідеально */
+}
+
+
+#scrollToTopBtn:hover {
+    /* При наведенні стає непрозорою */
+    opacity: 1 !important; 
+}
+
+/* Виправлення для float */
+main.flex-grow-1::after {
+    content: "";
+    display: table;
+    clear: both;
+}
