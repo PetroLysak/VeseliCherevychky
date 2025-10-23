@@ -61,39 +61,23 @@ a .logo:hover {
 }
 
 /* ================================================= */
-/* Адаптивність хедера (Мобільні - ОНОВЛЕНО)        */
+/* Адаптивність хедера (Мобільні)                   */
 /* ================================================= */
 @media (max-width: 576px) {
-    
-    /* Прибираємо вертикальне розташування кнопок */
+    /* Повертаємо горизонтальне розташування */
     .main-nav {
         /* flex-direction: column; -- видалено */
-        gap: 0; /* Прибираємо вертикальний відступ */
-        /* Можливо, знадобиться зменшити горизонтальні відступи, 
-           якщо кнопки не влазять. 
-           Наприклад, замінити mx-2 на mx-1 у HTML */
+        gap: 0; 
     }
     
-    /* Повертаємо правий розпірку, щоб кнопки були по центру */
     .logo-wrapper[style*="visibility: hidden"] {
-         display: block; /* Або можна просто видалити це правило */
+         display: block; 
     }
 
-    /* Прибираємо вертикальне розташування логотипу над кнопками */
     .d-flex.justify-content-between.align-items-center {
         /* flex-direction: column; -- видалено */
-        gap: 0; /* Прибираємо вертикальний відступ */
+        gap: 0; 
     }
-
-    /* (Необов'язково) Якщо кнопки завеликі для мобільного, 
-       можна зменшити шрифт: */
-    /*
-    .main-nav .btn {
-        font-size: 0.8rem; 
-        padding-left: 0.5rem;
-        padding-right: 0.5rem;
-    }
-    */
 }
 
 /* ================================================= */
@@ -124,7 +108,7 @@ a .logo:hover {
     width: 100%;
 }
 
-/* Адаптивний контейнер для ВІДЕО (16:9) */
+/* Адаптивний контейнер для ВІДЕО (16:9), коли воно завантажене */
 .embed-responsive-container {
     position: relative;
     padding-bottom: 56.25%; /* Співвідношення 16:9 */
@@ -142,6 +126,64 @@ a .logo:hover {
     width: 100%;
     height: 100%;
 }
+
+/* ================================================= */
+/* Стилі для Плейсхолдера Відео (Lazy Load)         */
+/* ================================================= */
+
+.video-placeholder {
+    position: relative; 
+    cursor: pointer;
+    overflow: hidden; 
+    aspect-ratio: 16 / 9; 
+    background-color: #eee; 
+    border-top: 1px solid #dee2e6; /* Лінія, як у фото */
+}
+
+.video-placeholder img.video-thumbnail {
+    display: block;
+    width: 100%;
+    height: 100%;
+    object-fit: cover; 
+    transition: transform 0.3s ease; 
+}
+
+.video-placeholder:hover img.video-thumbnail {
+    transform: scale(1.05); 
+}
+
+/* Стиль для кнопки Play */
+.play-button {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 60px; 
+    height: 60px;
+    background-color: rgba(0, 0, 0, 0.6); 
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: background-color 0.3s ease;
+}
+
+/* Малюємо трикутник "Play" */
+.play-button::after {
+    content: '';
+    display: block;
+    width: 0;
+    height: 0;
+    border-style: solid;
+    border-width: 12px 0 12px 20px; 
+    border-color: transparent transparent transparent white; 
+    margin-left: 5px; 
+}
+
+.video-placeholder:hover .play-button {
+    background-color: rgba(204, 0, 0, 0.8); /* Червоний при наведенні */
+}
+
 
 /* ================================================= */
 /* Футер: Шрифти                                     */
