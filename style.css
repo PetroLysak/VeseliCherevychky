@@ -8,8 +8,8 @@ body {
 }
 
 .bg-custom-red {
-    background-color: #00008B; 
-    background-image: linear-gradient(to right, #87CEEB, #00008B);
+    background-color: #00008B; /* Запасний колір */
+    background-image: linear-gradient(to right, #87CEEB, #00008B); /* Градієнт */
 }
 
 /* ================================================= */
@@ -19,7 +19,7 @@ body {
     height: 60px;
     width: auto;
     transition: opacity 0.2s;
-    margin-top: -5px;
+    margin-top: -5px;  /* Негативні відступи для компенсації збільшення */
     margin-bottom: -5px;
 }
 
@@ -34,12 +34,12 @@ a .logo:hover {
 }
 
 .main-nav .btn.btn-outline-light:hover {
-    background-color: rgba(255, 255, 255, 0.2) !important; 
+    background-color: rgba(255, 255, 255, 0.2) !important;
     color: white;
 }
 
 .main-nav .btn.btn-outline-light:focus {
-    box-shadow: none;
+    box-shadow: none; /* Прибирає синю рамку Bootstrap при кліку */
 }
 
 /* ================================================= */
@@ -47,13 +47,17 @@ a .logo:hover {
 /* ================================================= */
 
 #photoCarousel {
-    max-width: 700px;
+    max-width: 700px; /* Максимальна ширина (і висота, бо 1:1) */
     margin-left: auto;
     margin-right: auto;
 }
 
-.carousel-image {
-    /* Фото 1:1 в каруселі (не 16:9) */
+/* Примусово робимо ВСІ фото в каруселі квадратними (1:1), щоб уникнути стрибків */
+#photoCarousel .carousel-image { /* Уточнили селектор */
+    aspect-ratio: 1 / 1;      /* Встановлюємо співвідношення 1:1 */
+    object-fit: cover;      /* Масштабуємо фото, щоб заповнити квадрат, обрізаючи зайве */
+    width: 100%;            /* Займає всю ширину слайду */
+    height: auto;           /* Висота підлаштовується під aspect-ratio */
 }
 
 /* ================================================= */
@@ -63,13 +67,14 @@ a .logo:hover {
     .main-nav {
         display: flex;
         flex-direction: column;
-        gap: 5px; 
-    }
-    
-    .logo-wrapper[style*="visibility: hidden"] {
-        display: none;
+        gap: 5px;
     }
 
+    .logo-wrapper[style*="visibility: hidden"] {
+        display: none; /* Ховаємо пустий спейсер */
+    }
+
+    /* Логотип по центру над кнопками */
     .d-flex.justify-content-between.align-items-center {
         flex-direction: column;
         gap: 15px;
@@ -82,7 +87,7 @@ a .logo:hover {
 
 .video-card {
     transition: box-shadow 0.2s ease-in-out;
-    border: none; 
+    border: none;
 }
 
 .video-card:hover {
@@ -92,11 +97,11 @@ a .logo:hover {
 /* Назва над відео/фото */
 .video-card .card-title {
     font-weight: 600;
-    margin-bottom: 0; 
-    background-color: #f8f9fa; 
+    margin-bottom: 0;
+    background-color: #f8f9fa; /* Світлий фон */
 }
 
-/* (ВАЖЛИВО) Адаптивні ФОТО-заглушки (16:9) */
+/* Адаптивні ФОТО-заглушки (16:9) */
 .video-card .card-img-top {
     border-top: 1px solid #dee2e6; /* Лінія-розділювач */
     aspect-ratio: 16 / 9;
@@ -104,18 +109,17 @@ a .logo:hover {
     width: 100%;
 }
 
-/* (ДУЖЕ ВАЖЛИВО) Адаптивний контейнер для ВІДЕО (16:9) */
+/* Адаптивний контейнер для ВІДЕО (16:9) */
 .embed-responsive-container {
     position: relative;
-    padding-bottom: 56.25%; /* Це створює співвідношення 16:9 */
+    padding-bottom: 56.25%; /* Співвідношення 16:9 */
     height: 0;
     overflow: hidden;
     max-width: 100%;
-    
-    /* Тут НЕМАЄ border-top, щоб не було лінії над відео */
+    /* Без border-top */
 }
 
-/* (ДУЖЕ ВАЖЛИВО) Сам плеєр (Vimeo, YouTube) */
+/* Сам плеєр (Vimeo, YouTube) всередині контейнера */
 .embed-responsive-container iframe {
     position: absolute;
     top: 0;
@@ -133,66 +137,61 @@ footer.bg-custom-red {
 }
 
 footer .h5 {
-    font-weight: 700;
+    font-weight: 700; /* Жирний */
 }
 
 footer .social-links a {
-    font-weight: 700;
+    font-weight: 700; /* Жирний */
 }
 
 /* ================================================= */
-/* (ОНОВЛЕНО) Кнопка "Наверх"                        */
+/* Кнопка "Наверх"                                   */
 /* ================================================= */
 
 #scrollToTopBtn {
-    /* Кнопка ховається через opacity та visibility (керується з JS) */
-    display: flex; 
+    /* Керується з JS: visibility: hidden/visible; opacity: 0/0.1; */
+    display: flex; /* Для центрування стрілки */
     visibility: hidden;
     opacity: 0;
-    
-    position: sticky; 
+
+    position: sticky; /* Прилипає до <main> */
     bottom: 20px;
-    float: right; 
+    float: right; /* Праворуч */
     margin-right: 20px;
     z-index: 99;
-    
+
     width: 50px;
     height: 50px;
-    border-radius: 50%;
-    background-color: #f1f1f1; 
-    color: #333; 
-    
+    border-radius: 50%; /* Кругла */
+    background-color: #f1f1f1; /* Світло-сірий */
+    color: #333; /* Темний колір стрілки */
+
     border: none;
     outline: none;
     cursor: pointer;
-    
+
     /* Flexbox для ідеального центрування псевдо-елемента */
     align-items: center;
     justify-content: center;
 
-    /* Ми прибрали звідси font-size і line-height */
-    
-    transition: opacity 0.3s, visibility 0.3s;
+    transition: opacity 0.3s, visibility 0.3s; /* Плавна поява/зникнення */
 }
 
-/* (НОВИЙ БЛОК) Малюємо стрілку і центруємо її */
+/* Малюємо стрілку через псевдо-елемент і центруємо її вручну */
 #scrollToTopBtn::before {
-    content: '\2191'; /* Це Unicode-символ для &uarr; */
-    font-size: 42px; /* Ваш великий розмір */
+    content: '\2191'; /* Unicode стрілки вгору */
+    font-size: 42px; /* Розмір стрілки */
     font-weight: bold;
-    
-    /* (ГОЛОВНЕ ВИПРАВЛЕННЯ) "Підштовхуємо" стрілку вгору */
     position: relative;
-    top: -3px; /* Спробуйте -2px або -4px, якщо -3px буде не ідеально */
+    top: -3px; /* "Підштовхуємо" стрілку вгору для візуального центрування */
 }
 
 
 #scrollToTopBtn:hover {
-    /* При наведенні стає непрозорою */
-    opacity: 1 !important; 
+    opacity: 1 !important; /* Стає непрозорою при наведенні */
 }
 
-/* Виправлення для float */
+/* Виправлення для float: right; щоб кнопка не впливала на інші елементи */
 main.flex-grow-1::after {
     content: "";
     display: table;
