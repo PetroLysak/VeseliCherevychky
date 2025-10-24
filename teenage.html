@@ -17,31 +17,36 @@
 </head>
 <body class="d-flex flex-column min-vh-100">
 
-    <header class="p-3 bg-custom-red text-white">
+    <nav class="navbar navbar-expand-sm p-3 bg-custom-red navbar-dark">
         <div class="container-fluid">
-            <div class="d-flex justify-content-between align-items-center">
-                
-                <div class="logo-wrapper">
-                    <a href="index.html">
-                         <img src="photos/logo.png" alt="Логотип" class="logo">
-                    </a>
-                </div>
-                
-                <nav class="main-nav">
-					<a href="small.html" class="btn btn-outline-light mx-2 mx-md-3 fw-bold">Малі</a>
-					<a href="preparatory.html" class="btn btn-outline-light mx-2 mx-md-3 fw-bold">Підготовча</a>
-					<a href="teenage.html" class="btn btn-outline-light mx-2 mx-md-3 fw-bold">Підліткова</a>
-					<a href="about.html" class="btn btn-outline-light mx-2 mx-md-3 fw-bold">Про нас</a>
-				</nav>
-                
-                <div class="logo-wrapper" style="visibility: hidden;">
-                     <img src="photos/logo.png" alt="" class="logo">
-                </div>
+            
+            <a class="navbar-brand me-auto" href="index.html"> 
+                <img src="photos/logo.png" alt="Логотип" class="logo d-inline-block align-top">
+            </a>
 
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarLinks" aria-controls="navbarLinks" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+
+            <div class="collapse navbar-collapse justify-content-center" id="navbarLinks"> 
+                <ul class="navbar-nav"> 
+                    <li class="nav-item">
+                        <a href="small.html" class="nav-link btn btn-outline-light mx-2 mx-md-3 fw-bold">Малі</a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="preparatory.html" class="nav-link btn btn-outline-light mx-2 mx-md-3 fw-bold">Підготовча</a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="teenage.html" class="nav-link btn btn-outline-light mx-2 mx-md-3 fw-bold">Підліткова</a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="about.html" class="nav-link btn btn-outline-light mx-2 mx-md-3 fw-bold">Про нас</a>
+                    </li>
+                </ul>
             </div>
+            
         </div>
-    </header>
-
+    </nav>
     <main class="flex-grow-1 bg-white">
         <div class="container my-5">
             
@@ -80,9 +85,17 @@
                 <div class="col">
                     <div class="card h-100 shadow-sm video-card">
                         <h5 class="card-title text-center p-2">Березнянка</h5>
-                        <div class="video-placeholder" data-youtube-id="2YzkDJejB48">
-                            <img src="https://img.youtube.com/vi/2YzkDJejB48/hqdefault.jpg" alt="Заглушка для Березнянка" class="img-fluid video-thumbnail" loading="lazy">
-                            <div class="play-button"></div>
+                        {/* Пряме вбудовування iframe */}
+                        <div class="embed-responsive-container"> 
+                            <iframe 
+                                src="https://www.youtube.com/embed/2YzkDJejB48?si=swaUW-MEkMqqlmZD" 
+                                title="YouTube video player" 
+                                frameborder="0" 
+                                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" 
+                                referrerpolicy="strict-origin-when-cross-origin" 
+                                allowfullscreen 
+                                loading="lazy"> 
+                            </iframe>
                         </div>
                     </div>
                 </div>
@@ -521,8 +534,4 @@
     <script src="script.js"></script>
 
 </body>
-
 </html>
-
-
-

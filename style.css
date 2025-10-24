@@ -15,32 +15,35 @@ body {
 /* ================================================= */
 /* Хедер: Логотип та Навігація                       */
 /* ================================================= */
-.logo {
-    height: 60px;
+/* Стилі для логотипу всередині navbar-brand */
+.navbar-brand .logo {
+    height: 60px; /* Ваш розмір */
     width: auto;
+    margin: -5px 0; /* Ваші відступи */
     transition: opacity 0.2s;
-    margin-top: -5px;  /* Негативні відступи для компенсації збільшення */
-    margin-bottom: -5px;
 }
-
-a .logo:hover {
-    opacity: 0.8;
+.navbar-brand:hover .logo {
+     opacity: 0.8;
 }
 
 /* Кнопки навігації (без рамок) */
-.main-nav .btn.btn-outline-light {
+.main-nav .btn.btn-outline-light, /* Старий селектор для сумісності, якщо десь лишився */
+.navbar-nav .nav-link.btn.btn-outline-light { /* Новий селектор для кнопок в navbar */
     border: none;
-    font-family: 'Montserrat', sans-serif; /* Дублюємо шрифт для надійності */
+    font-family: 'Montserrat', sans-serif; 
 }
 
-.main-nav .btn.btn-outline-light:hover {
+.main-nav .btn.btn-outline-light:hover,
+.navbar-nav .nav-link.btn.btn-outline-light:hover {
     background-color: rgba(255, 255, 255, 0.2) !important;
     color: white;
 }
 
-.main-nav .btn.btn-outline-light:focus {
-    box-shadow: none; /* Прибирає синю рамку Bootstrap при кліку */
+.main-nav .btn.btn-outline-light:focus,
+.navbar-nav .nav-link.btn.btn-outline-light:focus {
+    box-shadow: none; 
 }
+
 
 /* ================================================= */
 /* Головна сторінка: Карусель                      */
@@ -61,24 +64,50 @@ a .logo:hover {
 }
 
 /* ================================================= */
-/* Адаптивність хедера (Мобільні)                   */
+/* Адаптивність хедера (Мобільні - Бургер)          */
 /* ================================================= */
-@media (max-width: 576px) {
-    /* Повертаємо горизонтальне розташування */
-    .main-nav {
-        /* flex-direction: column; -- видалено */
-        gap: 0; 
-    }
-    
-    .logo-wrapper[style*="visibility: hidden"] {
-         display: block; 
+
+/* Робимо іконку бургера білою */
+.navbar-dark .navbar-toggler-icon {
+  background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 30 30'%3e%3cpath stroke='rgba%28255, 255, 255, 1%29' stroke-linecap='round' stroke-miterlimit='10' stroke-width='2' d='M4 7h22M4 15h22M4 23h22'/%3e%3c/svg%3e");
+}
+
+/* Прибираємо рамку у кнопки бургера при фокусі */
+.navbar-dark .navbar-toggler {
+    border-color: transparent; 
+}
+.navbar-toggler:focus {
+    box-shadow: none;
+}
+
+/* Стилі для розгорнутого меню на мобільних */
+@media (max-width: 575.98px) { /* Точка зупинки Bootstrap sm */
+    .navbar-collapse {
+        /* Меню з'являється під хедером */
+        position: absolute;
+        top: 100%; /* Одразу під хедером */
+        left: 0;
+        right: 0;
+        background-color: #00008B; /* Темно-синій фон */
+        padding: 1rem;
+        z-index: 1000; 
+        border-top: 1px solid rgba(255, 255, 255, 0.2); 
     }
 
-    .d-flex.justify-content-between.align-items-center {
-        /* flex-direction: column; -- видалено */
-        gap: 0; 
+    .navbar-nav {
+        align-items: center; /* Центруємо посилання */
+    }
+
+    .navbar-nav .nav-item {
+        margin-bottom: 0.5rem; /* Відступ між кнопками */
+    }
+    
+    .navbar-nav .nav-link.btn { 
+        width: auto; 
+        display: inline-block; 
     }
 }
+
 
 /* ================================================= */
 /* Сторінки Відео: Картки, Фото і Плеєри           */
@@ -118,7 +147,7 @@ a .logo:hover {
     /* Без border-top */
 }
 
-/* Сам плеєр (Vimeo, YouTube) всередині контейнера */
+/* Сам плеєр (YouTube) всередині контейнера */
 .embed-responsive-container iframe {
     position: absolute;
     top: 0;
