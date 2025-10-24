@@ -30,7 +30,7 @@ body {
 .main-nav .btn.btn-outline-light, /* Старий селектор для сумісності, якщо десь лишився */
 .navbar-nav .nav-link.btn.btn-outline-light { /* Новий селектор для кнопок в navbar */
     border: none;
-    font-family: 'Montserrat', sans-serif; 
+    font-family: 'Montserrat', sans-serif;
 }
 
 .main-nav .btn.btn-outline-light:hover,
@@ -41,7 +41,7 @@ body {
 
 .main-nav .btn.btn-outline-light:focus,
 .navbar-nav .nav-link.btn.btn-outline-light:focus {
-    box-shadow: none; 
+    box-shadow: none;
 }
 
 
@@ -74,15 +74,13 @@ body {
 
 /* Прибираємо рамку у кнопки бургера при фокусі */
 .navbar-dark .navbar-toggler {
-    border-color: transparent; 
+    border-color: transparent;
 }
 .navbar-toggler:focus {
     box-shadow: none;
 }
 
-/* ================================================= */
-/* Адаптивність хедера (Мобільні - Бургер - ОНОВЛЕНО) */
-/* ================================================= */
+/* Стилі для розгорнутого меню на мобільних */
 @media (max-width: 575.98px) { /* Точка зупинки Bootstrap sm */
     .navbar-collapse {
         /* Меню з'являється під хедером */
@@ -90,14 +88,14 @@ body {
         top: 100%; /* Одразу під хедером */
         left: 0;
         right: 0;
-        
-        /* (ОНОВЛЕНО) Застосовуємо градієнт */
+
+        /* Застосовуємо градієнт */
         background-color: #00008B; /* Запасний колір */
         background-image: linear-gradient(to right, #87CEEB, #00008B); /* Градієнт */
-        
+
         padding: 1rem;
-        z-index: 1000; 
-        border-top: 1px solid rgba(255, 255, 255, 0.2); 
+        z-index: 1000;
+        border-top: 1px solid rgba(255, 255, 255, 0.2);
     }
 
     .navbar-nav {
@@ -107,13 +105,13 @@ body {
     .navbar-nav .nav-item {
         margin-bottom: 0.5rem; /* Відступ між кнопками */
     }
-    
-    .navbar-nav .nav-link.btn { 
-        width: auto; 
-        display: inline-block; 
+
+    .navbar-nav .nav-link.btn {
+        width: auto;
+        display: inline-block;
     }
 
-    /* (ОНОВЛЕНО) Стилі кнопок у бургер-меню */
+    /* Стилі кнопок у бургер-меню */
     .navbar-nav .nav-link.btn.btn-outline-light {
         color: white; /* Забезпечуємо білий текст */
         border: none; /* <-- Прибираємо рамку */
@@ -123,6 +121,7 @@ body {
          /* border-color: ... -- видалено */
     }
 }
+
 
 /* ================================================= */
 /* Сторінки Відео: Картки, Фото і Плеєри           */
@@ -176,11 +175,11 @@ body {
 /* ================================================= */
 
 .video-placeholder {
-    position: relative; 
+    position: relative;
     cursor: pointer;
-    overflow: hidden; 
-    aspect-ratio: 16 / 9; 
-    background-color: #eee; 
+    overflow: hidden;
+    aspect-ratio: 16 / 9;
+    background-color: #eee;
     border-top: 1px solid #dee2e6; /* Лінія, як у фото */
 }
 
@@ -188,12 +187,12 @@ body {
     display: block;
     width: 100%;
     height: 100%;
-    object-fit: cover; 
-    transition: transform 0.3s ease; 
+    object-fit: cover;
+    transition: transform 0.3s ease;
 }
 
 .video-placeholder:hover img.video-thumbnail {
-    transform: scale(1.05); 
+    transform: scale(1.05);
 }
 
 /* Стиль для кнопки Play */
@@ -202,9 +201,9 @@ body {
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
-    width: 60px; 
+    width: 60px;
     height: 60px;
-    background-color: rgba(0, 0, 0, 0.6); 
+    background-color: rgba(0, 0, 0, 0.6);
     border-radius: 50%;
     display: flex;
     align-items: center;
@@ -219,9 +218,9 @@ body {
     width: 0;
     height: 0;
     border-style: solid;
-    border-width: 12px 0 12px 20px; 
-    border-color: transparent transparent transparent white; 
-    margin-left: 5px; 
+    border-width: 12px 0 12px 20px;
+    border-color: transparent transparent transparent white;
+    margin-left: 5px;
 }
 
 .video-placeholder:hover .play-button {
@@ -349,4 +348,144 @@ a:hover .social-icon {
 .social-icons-group a:focus {
     outline: none;
     box-shadow: none;
+}
+
+/* ================================================= */
+/* Стилі для Перемикача Тем (Світла/Темна)          */
+/* ================================================= */
+
+/* Кнопка перемикання теми в хедері */
+.theme-toggle-btn {
+    border: none;
+    padding: 0.375rem 0.5rem; /* Зменшені падінги */
+    font-size: 1.2rem; /* Розмір іконки */
+}
+.theme-toggle-btn:focus, .theme-toggle-btn:active {
+    box-shadow: none !important;
+    outline: none !important;
+}
+.theme-toggle-btn:hover {
+     background-color: rgba(255, 255, 255, 0.2) !important;
+     color: white !important;
+}
+
+/* Вирівнювання іконок в меню вибору теми */
+.dropdown-item > span { /* Це для випадку, якщо ви додасте іконки до пунктів меню */
+    margin-right: 0.5rem;
+}
+
+/* ================================================= */
+/* Стилі для ТЕМНОЇ ТЕМИ                            */
+/* ================================================= */
+
+body.dark-theme {
+    background-color: #000000; /* Чорний фон для <body> */
+    color: #ffffff; /* Білий текст за замовчуванням */
+}
+
+/* --- Хедер і Футер --- */
+body.dark-theme .bg-custom-red {
+    background-color: #000000 !important; /* Чорний фон */
+    background-image: none !important; /* Прибираємо градієнт */
+}
+/* Робимо фон випадаючого бургер-меню теж чорним */
+@media (max-width: 575.98px) {
+    body.dark-theme .navbar-collapse {
+        background-color: #000000 !important;
+        background-image: none !important;
+        border-top-color: rgba(255, 255, 255, 0.1); /* Лінія трохи темніша */
+    }
+    body.dark-theme .navbar-nav .nav-link.btn.btn-outline-light:hover {
+         background-color: rgba(255, 255, 255, 0.15) !important; /* Фон при наведенні трохи інший */
+    }
+}
+
+/* --- Dropdown Меню Теми (Темна тема) --- */
+body.dark-theme .dropdown-menu {
+    background-color: #000000; /* Чорний фон */
+    border-color: rgba(255, 255, 255, 0.15); /* Трохи світліша рамка */
+}
+body.dark-theme .dropdown-item {
+    color: #ffffff; /* Білий текст */
+}
+body.dark-theme .dropdown-item:hover,
+body.dark-theme .dropdown-item:focus {
+    background-color: #343a40; /* Темно-сірий фон при наведенні/фокусі */
+    color: #ffffff; /* Текст залишається білим */
+}
+/* Колір кнопки перемикання теми в темному режимі */
+body.dark-theme .theme-toggle-btn {
+    color: #ffffff; /* Переконуємось, що іконка біла */
+}
+body.dark-theme .theme-toggle-btn:hover {
+     background-color: rgba(255, 255, 255, 0.15) !important; /* Трохи інший фон при наведенні */
+}
+
+
+/* --- Основний контент --- */
+body.dark-theme main.bg-white {
+    background-color: #000000 !important; /* Чорний фон */
+}
+
+/* --- Текст --- */
+body.dark-theme h1,
+body.dark-theme h2,
+body.dark-theme h3,
+body.dark-theme h4,
+body.dark-theme h5,
+body.dark-theme h6,
+body.dark-theme p,
+body.dark-theme .lead { /* Додаємо .lead для опису */
+    color: #ffffff; /* Білий текст */
+}
+
+/* Виняток: червоний текст на головній сторінці */
+body.dark-theme .description-block .text-danger {
+    color: #dc3545 !important; /* Залишаємо червоним */
+}
+
+/* Назви танців/викладачів */
+body.dark-theme .video-card .card-title {
+     background-color: #343a40; /* Темно-сірий фон */
+     color: #ffffff; /* Білий текст */
+}
+
+/* Лінія над фото/відео заглушкою */
+body.dark-theme .video-card .card-img-top,
+body.dark-theme .video-placeholder {
+     border-top-color: #495057; /* Темніша лінія розділення */
+}
+
+
+/* --- Карусель на головній --- */
+body.dark-theme #photoCarousel .carousel-inner {
+    border-color: #ffff00 !important; /* Жовта рамка */
+}
+
+/* --- Сторінка "Про нас" --- */
+/* Рамка навколо фото */
+body.dark-theme .border-custom-dark-blue {
+    border-color: #ffff00 !important; /* Жовтий */
+}
+/* Фон під фото (якщо видно) */
+body.dark-theme .about-image {
+    background-color: #ffffe0; /* Світло-жовтий (LightYellow) */
+}
+/* Горизонтальна лінія */
+body.dark-theme hr {
+    /* Використовуємо border-top замість background-color для hr */
+    border-top: 1px solid rgba(255, 255, 255, 0.2); /* Світліша лінія */
+    opacity: 1; /* Робимо лінію повністю видимою */
+}
+
+/* --- Кнопка "Наверх" --- */
+body.dark-theme #scrollToTopBtn {
+    background-color: #444; /* Темніший фон */
+    color: #eee; /* Світліша стрілка */
+}
+body.dark-theme #scrollToTopBtn::before {
+     color: #eee; /* Світліша стрілка */
+}
+body.dark-theme #scrollToTopBtn:hover {
+    background-color: #666;
 }
