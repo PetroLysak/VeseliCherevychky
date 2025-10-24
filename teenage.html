@@ -85,17 +85,9 @@
                 <div class="col">
                     <div class="card h-100 shadow-sm video-card">
                         <h5 class="card-title text-center p-2">Березнянка</h5>
-                        {/* Пряме вбудовування iframe */}
-                        <div class="embed-responsive-container"> 
-                            <iframe 
-                                src="https://www.youtube.com/embed/2YzkDJejB48?si=swaUW-MEkMqqlmZD" 
-                                title="YouTube video player" 
-                                frameborder="0" 
-                                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" 
-                                referrerpolicy="strict-origin-when-cross-origin" 
-                                allowfullscreen 
-                                loading="lazy"> 
-                            </iframe>
+                        <div class="video-placeholder" data-youtube-id="2YzkDJejB48">
+                            <img src="https://img.youtube.com/vi/2YzkDJejB48/hqdefault.jpg" alt="Заглушка для Бойківська легонька" class="img-fluid video-thumbnail" loading="lazy">
+                            <div class="play-button"></div>
                         </div>
                     </div>
                 </div>
