@@ -113,14 +113,14 @@ body {
         display: inline-block; 
     }
 
-    /* (ОНОВЛЕНО) Робимо кнопки світлішими та контрастнішими на градієнті */
+    /* (ОНОВЛЕНО) Стилі кнопок у бургер-меню */
     .navbar-nav .nav-link.btn.btn-outline-light {
         color: white; /* Забезпечуємо білий текст */
-        border: 1px solid rgba(255, 255, 255, 0.5); /* Додаємо ледь помітну білу рамку */
+        border: none; /* <-- Прибираємо рамку */
     }
     .navbar-nav .nav-link.btn.btn-outline-light:hover {
          background-color: rgba(255, 255, 255, 0.3) !important; /* Робимо фон при наведенні світлішим */
-         border-color: rgba(255, 255, 255, 0.7); /* Рамка стає трохи помітнішою */
+         /* border-color: ... -- видалено */
     }
 }
 
