@@ -2,9 +2,11 @@
 /* Основні налаштування та Градієнт                 */
 /* ================================================= */
 
+/* 1. Додаємо відступ зверху для всього сайту, щоб контент не ховався під хедер */
 body {
-    /* Застосовуємо шрифт до всього сайту */
+    padding-top: 93px; /* Висота вашого хедера */
     font-family: 'Montserrat', sans-serif;
+    transition: background-color 0.3s, color 0.3s;
 }
 
 .bg-custom-red {
@@ -515,9 +517,10 @@ body.dark-theme #scrollToTopBtn:hover {
 /* ================================================= */
 /* ПАНЕЛЬ ПОШУКУ (КОМПАКТНА СПРАВА)                 */
 /* ================================================= */
+/* 2. Оновлюємо панель пошуку, щоб вона була фіксованою і скролилася разом з хедером */
 #search-container {
-    position: absolute; 
-    top: 93px;          /* <--- ДОДАНО: Це опускає панель чітко ПІД хедер */
+    position: fixed;    /* Змінено з absolute на fixed */
+    top: 93px;          /* Чітко під фіксованим хедером */
     right: 20px;        
     width: 350px;       
     max-width: 90vw;    
@@ -547,6 +550,7 @@ body.dark-theme #scrollToTopBtn:hover {
 }
 
 /* Темна тема для пошуку */
+/* 3. Корекція для темної теми */
 body.dark-theme #search-container {
     background-color: #1a1a1a !important;
     border: 1px solid #ffff00;
@@ -589,7 +593,7 @@ body.dark-theme #intro-overlay {
 
 /* Політ у лівий верхній кут */
 #intro-logo.fly {
-    top: 11px; 
+    top: 11px; /* Це положення всередині фіксованого хедера */
     left: 15px; 
     transform: translate(0, 0); 
     height: 60px; 
