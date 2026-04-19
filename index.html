@@ -15,6 +15,18 @@
     <link rel="stylesheet" href="style.css">
 </head>
 <body class="d-flex flex-column min-vh-100">
+	<script>
+        (function() {
+            const currentTheme = localStorage.getItem('theme') || 'light';
+            if (currentTheme === 'dark') {
+                document.body.classList.add('dark-theme');
+            }
+        })();
+    </script>
+
+    <div id="intro-overlay">
+        <img src="photos/logo.png" alt="Логотип" id="intro-logo">
+    </div>
 
     <nav class="navbar navbar-expand-sm p-3 bg-custom-red navbar-dark">
         <div class="container-fluid">

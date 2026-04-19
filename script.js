@@ -1,42 +1,69 @@
 // Чекаємо, поки сторінка завантажиться
 document.addEventListener('DOMContentLoaded', () => {
-    
+
     // ==========================================
-    // 1. КАРУСЕЛЬ (на index.html)
+    // 0. ПЕРЕВІРКА ТЕМИ (Робимо першим, щоб фон анімації одразу був правильним)
+    // ==========================================
+    const currentTheme = localStorage.getItem('theme') ? localStorage.getItem('theme') : 'light';
+    if (currentTheme === 'dark') {
+        document.body.classList.add('dark-theme');
+    } else {
+        document.body.classList.remove('dark-theme');
+    }
+
+    // ==========================================
+    // 1. АНІМАЦІЯ ПРИ ЗАХОДІ НА САЙТ (тільки для index.html)
+    // ==========================================
+    const introOverlay = document.getElementById('intro-overlay');
+    const introLogo = document.getElementById('intro-logo');
+    
+    if (introOverlay && introLogo) {
+        // Перевіряємо, чи людина вже бачила анімацію в цій сесії (вкладці)
+        if (!sessionStorage.getItem('introPlayed')) {
+            document.body.style.overflow = 'hidden'; // Забороняємо скрол під час анімації
+            
+            setTimeout(() => {
+                introLogo.classList.add('fly');
+                introOverlay.classList.add('hidden');
+                
+                setTimeout(() => {
+                    introOverlay.style.display = 'none';
+                    document.body.style.overflow = ''; // Повертаємо скрол
+                    sessionStorage.setItem('introPlayed', 'true');
+                }, 1000); 
+            }, 300);
+        } else {
+            // Якщо вже бачили — просто ховаємо overlay
+            introOverlay.style.display = 'none';
+        }
+    }
+
+    // ==========================================
+    // 2. ГЕНЕРАЦІЯ КАРУСЕЛІ (на index.html)
     // ==========================================
     const carouselElement = document.getElementById('photoCarousel');
-    
     if (carouselElement) {
         const carouselInner = carouselElement.querySelector('.carousel-inner');
         const carouselIndicators = carouselElement.querySelector('.carousel-indicators');
         const totalImages = 940; 
 
         carouselInner.innerHTML = '';
-        carouselIndicators.innerHTML = '';
+        if (carouselIndicators) carouselIndicators.innerHTML = '';
         let slidesArray = [];
 
         for (let i = 1; i <= totalImages; i++) {
             const slideDiv = document.createElement('div');
             slideDiv.classList.add('carousel-item');
-            
             const img = document.createElement('img');
             img.src = `photos/${i}.jpg`;
             img.classList.add('d-block', 'w-100', 'carousel-image');
             img.alt = `Фото ${i}`;
             img.loading = 'lazy'; 
-
             slideDiv.appendChild(img);
             slidesArray.push(slideDiv);
-
-            const indicatorButton = document.createElement('button');
-            indicatorButton.type = 'button';
-            indicatorButton.setAttribute('data-bs-target', '#photoCarousel');
-            indicatorButton.setAttribute('data-bs-slide-to', i - 1);
-            indicatorButton.setAttribute('aria-label', `Slide ${i}`);
-            carouselIndicators.appendChild(indicatorButton);
         }
 
-        // Рандомний порядок слайдів
+        // Рандом
         for (let i = slidesArray.length - 1; i > 0; i--) {
             const j = Math.floor(Math.random() * (i + 1));
             [slidesArray[i], slidesArray[j]] = [slidesArray[j], slidesArray[i]];
@@ -46,108 +73,76 @@ document.addEventListener('DOMContentLoaded', () => {
             if (index === 0) slide.classList.add('active');
             carouselInner.appendChild(slide);
         });
-
-        const firstIndicator = carouselIndicators.querySelector('button');
-        if (firstIndicator) {
-             firstIndicator.classList.add('active');
-             firstIndicator.setAttribute('aria-current', 'true');
-        }
     }
-    
-    // ==========================================
-    // 2. ЗАВАНТАЖЕННЯ ВІДЕО ПО КЛІКУ
-    // ==========================================
-    const placeholders = document.querySelectorAll('.video-placeholder');
 
-    placeholders.forEach(placeholder => {
+    // ==========================================
+    // 3. ЗАВАНТАЖЕННЯ ВІДЕО ПО КЛІКУ
+    // ==========================================
+    document.querySelectorAll('.video-placeholder').forEach(placeholder => {
         placeholder.addEventListener('click', () => {
             const youtubeId = placeholder.dataset.youtubeId;
-            let iframeSrc = '';
-
             if (youtubeId) {
-                iframeSrc = `https://www.youtube.com/embed/${youtubeId}?autoplay=1`; 
-            } 
-
-            if (iframeSrc) {
                 const container = document.createElement('div');
                 container.classList.add('embed-responsive-container');
-
-                const iframe = document.createElement('iframe');
-                iframe.setAttribute('src', iframeSrc);
-                iframe.setAttribute('title', 'YouTube video player'); 
-                iframe.setAttribute('frameborder', '0');
-                iframe.setAttribute('allow', 'accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share');
-                iframe.setAttribute('referrerpolicy', 'strict-origin-when-cross-origin'); 
-                iframe.setAttribute('allowfullscreen', '');
-
-                container.appendChild(iframe);
-
-                if (placeholder.parentNode) {
-                    placeholder.parentNode.replaceChild(container, placeholder);
-                }
+                container.innerHTML = `
+                    <iframe src="https://www.youtube.com/embed/${youtubeId}?autoplay=1" 
+                            title="YouTube video player" frameborder="0" 
+                            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" 
+                            referrerpolicy="strict-origin-when-cross-origin" allowfullscreen>
+                    </iframe>`;
+                placeholder.parentNode.replaceChild(container, placeholder);
             }
-        }, { once: true }); 
+        }, { once: true });
     });
 
     // ==========================================
-    // 3. КНОПКА "НАВЕРХ"
+    // 4. КНОПКА "НАВЕРХ"
     // ==========================================
     const scrollTopBtn = document.getElementById('scrollToTopBtn');
-
     if (scrollTopBtn) {
         window.addEventListener('scroll', () => {
-            if (document.body.scrollTop > 100 || document.documentElement.scrollTop > 100) {
+            if (window.pageYOffset > 100) {
                 scrollTopBtn.style.visibility = 'visible';
-                scrollTopBtn.style.opacity = '1'; 
+                scrollTopBtn.style.opacity = '1';
             } else {
                 scrollTopBtn.style.visibility = 'hidden';
                 scrollTopBtn.style.opacity = '0';
             }
         });
-
         scrollTopBtn.addEventListener('click', () => {
             window.scrollTo({ top: 0, behavior: 'smooth' });
         });
     }
-    
+
     // ==========================================
-    // 4. ПЕРЕМИКАЧ ТЕМ (Світла/Темна)
+    // 5. ПЕРЕМИКАЧ ТЕМ
     // ==========================================
     const lightThemeBtn = document.getElementById('light-theme-btn');
     const darkThemeBtn = document.getElementById('dark-theme-btn');
     const themeIconContainer = document.getElementById('theme-icon-container');
-    const currentTheme = localStorage.getItem('theme') ? localStorage.getItem('theme') : 'light';
 
-    const sunIconSVG = `<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-sun" viewBox="0 0 16 16"><path d="M8 11a3 3 0 1 1 0-6 3 3 0 0 1 0 6zm0 1a4 4 0 1 0 0-8 4 4 0 0 0 0 8zM8 0a.5.5 0 0 1 .5.5v2a.5.5 0 0 1-1 0v-2A.5.5 0 0 1 8 0zm0 13a.5.5 0 0 1 .5.5v2a.5.5 0 0 1-1 0v-2A.5.5 0 0 1 8 13zm8-5a.5.5 0 0 1-.5.5h-2a.5.5 0 0 1 0-1h2a.5.5 0 0 1 .5.5zM3 8a.5.5 0 0 1-.5.5h-2a.5.5 0 0 1 0-1h2A.5.5 0 0 1 3 8zm10.657-5.657a.5.5 0 0 1 0 .707l-1.414 1.415a.5.5 0 1 1-.707-.708l1.414-1.414a.5.5 0 0 1 .707 0zm-9.193 9.193a.5.5 0 0 1 0 .707L3.05 13.657a.5.5 0 0 1-.707-.707l1.414-1.414a.5.5 0 0 1 .707 0zm9.193 2.121a.5.5 0 0 1-.707 0l-1.414-1.414a.5.5 0 0 1 .707-.707l1.414 1.414a.5.5 0 0 1 0 .707zM4.464 4.465a.5.5 0 0 1-.707 0L2.343 3.05a.5.5 0 1 1 .707-.707l1.414 1.414a.5.5 0 0 1 0 .708z"/></svg>`;
-    const moonIconSVG = `<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-moon-stars" viewBox="0 0 16 16"><path d="M6 .278a.768.768 0 0 1 .08.858 7.208 7.208 0 0 0-.878 3.46c0 4.021 3.278 7.277 7.318 7.277.527 0 1.04-.055 1.533-.16a.787.787 0 0 1 .81.316.733.733 0 0 1-.031.893A8.349 8.349 0 0 1 8.344 16C3.734 16 0 12.286 0 7.71 0 4.266 2.114 1.312 5.124.06A.752.752 0 0 1 6 .278zM10.794 3.148a.217.217 0 0 1 .412 0l.387 1.162h1.234a.217.217 0 0 1 .153.372l-.986.754.387 1.162a.217.217 0 0 1-.316.242l-.986-.754-.986.754a.217.217 0 0 1-.316-.242l.387-1.162-.986-.754a.217.217 0 0 1 .153-.372h1.234l.387-1.162zM13.863.099a.145.145 0 0 1 .274 0l.258.774c.115.346.386.617.732.732l.774.258a.145.145 0 0 1 0 .274l-.774.258a1.156 1.156 0 0 0-.732.732l-.258.774a.145.145 0 0 1-.274 0l-.258-.774a1.156 1.156 0 0 0-.732-.732l-.774-.258a.145.145 0 0 1 0-.274l.774-.258c.346-.115.617-.386.732-.732L13.863.1z"/></svg>`;
+    const sunIcon = `<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-sun" viewBox="0 0 16 16"><path d="M8 11a3 3 0 1 1 0-6 3 3 0 0 1 0 6zm0 1a4 4 0 1 0 0-8 4 4 0 0 0 0 8zM8 0a.5.5 0 0 1 .5.5v2a.5.5 0 0 1-1 0v-2A.5.5 0 0 1 8 0zm0 13a.5.5 0 0 1 .5.5v2a.5.5 0 0 1-1 0v-2A.5.5 0 0 1 8 13zm8-5a.5.5 0 0 1-.5.5h-2a.5.5 0 0 1 0-1h2a.5.5 0 0 1 .5.5zM3 8a.5.5 0 0 1-.5.5h-2a.5.5 0 0 1 0-1h2A.5.5 0 0 1 3 8zm10.657-5.657a.5.5 0 0 1 0 .707l-1.414 1.415a.5.5 0 1 1-.707-.708l1.414-1.414a.5.5 0 0 1 .707 0zm-9.193 9.193a.5.5 0 0 1 0 .707L3.05 13.657a.5.5 0 0 1-.707-.707l1.414-1.414a.5.5 0 0 1 .707 0zm9.193 2.121a.5.5 0 0 1-.707 0l-1.414-1.414a.5.5 0 0 1 .707-.707l1.414 1.414a.5.5 0 0 1 0 .707zM4.464 4.465a.5.5 0 0 1-.707 0L2.343 3.05a.5.5 0 1 1 .707-.707l1.414 1.414a.5.5 0 0 1 0 .708z"/></svg>`;
+    const moonIcon = `<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-moon-stars" viewBox="0 0 16 16"><path d="M6 .278a.768.768 0 0 1 .08.858 7.208 7.208 0 0 0-.878 3.46c0 4.021 3.278 7.277 7.318 7.277.527 0 1.04-.055 1.533-.16a.787.787 0 0 1 .81.316.733.733 0 0 1-.031.893A8.349 8.349 0 0 1 8.344 16C3.734 16 0 12.286 0 7.71 0 4.266 2.114 1.312 5.124.06A.752.752 0 0 1 6 .278zM10.794 3.148a.217.217 0 0 1 .412 0l.387 1.162h1.234a.217.217 0 0 1 .153.372l-.986.754.387 1.162a.217.217 0 0 1-.316.242l-.986-.754-.986.754a.217.217 0 0 1-.316-.242l.387-1.162-.986-.754a.217.217 0 0 1 .153-.372h1.234l.387-1.162zM13.863.099a.145.145 0 0 1 .274 0l.258.774c.115.346.386.617.732.732l.774.258a.145.145 0 0 1 0 .274l-.774.258a1.156 1.156 0 0 0-.732.732l-.258.774a.145.145 0 0 1-.274 0l-.258-.774a1.156 1.156 0 0 0-.732-.732l-.774-.258a.145.145 0 0 1 0-.274l.774-.258c.346-.115.617-.386.732-.732L13.863.1z"/></svg>`;
 
-    const setIcon = (theme) => {
-        if (themeIconContainer) themeIconContainer.innerHTML = theme === 'dark' ? moonIconSVG : sunIconSVG;
-    }
+    const updateTheme = (theme) => {
+        if (theme === 'dark') {
+            document.body.classList.add('dark-theme');
+            if (themeIconContainer) themeIconContainer.innerHTML = moonIcon;
+            localStorage.setItem('theme', 'dark');
+        } else {
+            document.body.classList.remove('dark-theme');
+            if (themeIconContainer) themeIconContainer.innerHTML = sunIcon;
+            localStorage.setItem('theme', 'light');
+        }
+    };
 
-    const enableDarkMode = () => {
-        document.body.classList.add('dark-theme');
-        setIcon('dark'); 
-        localStorage.setItem('theme', 'dark');
-    }
+    updateTheme(currentTheme); // Ініціалізація
 
-    const enableLightMode = () => {
-        document.body.classList.remove('dark-theme');
-        setIcon('light'); 
-        localStorage.setItem('theme', 'light');
-    }
-
-    if (currentTheme === 'dark') {
-        enableDarkMode();
-    } else {
-        enableLightMode(); 
-    }
-
-    if (lightThemeBtn) lightThemeBtn.addEventListener('click', enableLightMode);
-    if (darkThemeBtn) darkThemeBtn.addEventListener('click', enableDarkMode);
+    if (lightThemeBtn) lightThemeBtn.addEventListener('click', () => updateTheme('light'));
+    if (darkThemeBtn) darkThemeBtn.addEventListener('click', () => updateTheme('dark'));
 
     // ==========================================
-    // 5. БАЗА ДАНИХ ТАНЦІВ
+    // 6. ЛОГІКА ПОШУКУ
     // ==========================================
     const danceDatabase = [
         { name: "Адажіо", page: "teenage.html", yt: "W6OKLnUVVbA" },
@@ -241,9 +236,6 @@ document.addEventListener('DOMContentLoaded', () => {
         { name: "Чоботята", page: "small.html", yt: "dJdSI_hhW30" }
     ];
 
-    // ==========================================
-    // 6. ЛОГІКА ПОШУКУ
-    // ==========================================
     const searchToggle = document.getElementById('search-toggle');
     const searchContainer = document.getElementById('search-container');
     const searchInput = document.getElementById('search-input');
@@ -252,62 +244,41 @@ document.addEventListener('DOMContentLoaded', () => {
     function getTrigrams(str) {
         const s = str.toLowerCase();
         let grams = [];
-        for (let i = 0; i <= s.length - 3; i++) {
-            grams.push(s.substring(i, i + 3));
-        }
+        for (let i = 0; i <= s.length - 3; i++) grams.push(s.substring(i, i + 3));
         return grams;
     }
 
-	// Відкриття панелі при натисканні на лупу
     if (searchToggle) {
         searchToggle.addEventListener('click', () => {
-            // Ми ВИДАЛИЛИ e.stopPropagation(); щоб меню теми могло закриватися
             searchContainer.classList.toggle('d-none');
-            if (!searchContainer.classList.contains('d-none')) {
-                searchInput.focus();
-            }
+            if (!searchContainer.classList.contains('d-none')) searchInput.focus();
         });
     }
 
-    // Закриття панелі при кліку за її межами
     document.addEventListener('click', (event) => {
         if (searchContainer && !searchContainer.classList.contains('d-none')) {
             const isClickInsideSearch = searchContainer.contains(event.target);
-            const isClickOnToggle = searchToggle.contains(event.target); // Перевіряємо, чи клік був по самій лупі
-            
-            // Закриваємо пошук ТІЛЬКИ якщо клікнули повз пошук І повз лупу
+            const isClickOnToggle = searchToggle.contains(event.target);
             if (!isClickInsideSearch && !isClickOnToggle) {
                 searchContainer.classList.add('d-none');
             }
         }
     });
 
-    // Логіка фільтрації під час вводу тексту
     if (searchInput) {
         searchInput.addEventListener('input', (e) => {
             const query = e.target.value.toLowerCase().trim();
             searchResults.innerHTML = '';
-
-            if (query.length < 2) {
-                searchResults.classList.add('d-none');
-                return;
-            }
+            if (query.length < 2) { searchResults.classList.add('d-none'); return; }
 
             const queryGrams = getTrigrams(query);
-
             const filtered = danceDatabase.filter(dance => {
                 const name = dance.name.toLowerCase();
-                
-                // 1. Пряме входження (пріоритет)
                 if (name.includes(query)) return true;
-                
-                // 2. Логіка для помилок (триграми)
                 if (queryGrams.length > 0) {
                     const nameGrams = getTrigrams(name);
                     const matches = queryGrams.filter(g => nameGrams.includes(g));
-                    
-                    const matchPercentage = matches.length / queryGrams.length;
-                    return matchPercentage >= 0.45 || matches.length >= 2;
+                    return (matches.length / queryGrams.length) >= 0.45 || matches.length >= 2;
                 }
                 return false;
             });
@@ -316,16 +287,9 @@ document.addEventListener('DOMContentLoaded', () => {
                 filtered.forEach(dance => {
                     const item = document.createElement('div');
                     item.className = 'list-group-item list-group-item-action d-flex align-items-center';
-                    const imgUrl = `https://img.youtube.com/vi/${dance.yt}/default.jpg`;
-                    
-                    item.innerHTML = `
-                        <img src="${imgUrl}" class="search-preview" style="width:60px; height:40px; object-fit:cover; border-radius:4px; margin-right:15px;">
-                        <span class="dance-name fw-bold">${dance.name}</span>
-                    `;
-
-                    item.addEventListener('click', () => {
-                        window.location.href = `${dance.page}?jump=${encodeURIComponent(dance.name)}`;
-                    });
+                    item.innerHTML = `<img src="https://img.youtube.com/vi/${dance.yt}/default.jpg" class="search-preview" style="width:60px; height:40px; object-fit:cover; border-radius:4px; margin-right:15px;">
+                                      <span class="dance-name fw-bold">${dance.name}</span>`;
+                    item.addEventListener('click', () => window.location.href = `${dance.page}?jump=${encodeURIComponent(dance.name)}`);
                     searchResults.appendChild(item);
                 });
                 searchResults.classList.remove('d-none');
@@ -336,15 +300,13 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     // ==========================================
-    // 7. ЛОГІКА ПЕРЕХОДУ ТА АВТОСКРОЛУ
+    // 7. ЛОГІКА СКРОЛУ (jump)
     // ==========================================
     const urlParams = new URLSearchParams(window.location.search);
     const jumpTo = urlParams.get('jump');
-
     if (jumpTo) {
         setTimeout(() => {
-            const cards = document.querySelectorAll('.video-card h5');
-            cards.forEach(h5 => {
+            document.querySelectorAll('.video-card h5').forEach(h5 => {
                 if (h5.innerText.includes(jumpTo)) {
                     const card = h5.closest('.video-card');
                     card.scrollIntoView({ behavior: 'smooth', block: 'center' });
@@ -354,5 +316,4 @@ document.addEventListener('DOMContentLoaded', () => {
             });
         }, 500); 
     }
-
-}); // КІНЕЦЬ DOMContentLoaded
+});
