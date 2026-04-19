@@ -183,12 +183,25 @@ document.addEventListener('DOMContentLoaded', () => {
     // ==========================================
     const introOverlay = document.getElementById('intro-overlay');
     const introLogo = document.getElementById('intro-logo');
-    if (introOverlay && introLogo) {
+    // Знаходимо справжній логотип у хедері, щоб знати, куди летіти
+    const realLogo = document.querySelector('.navbar-brand .logo'); 
+
+    if (introOverlay && introLogo && realLogo) {
         if (!sessionStorage.getItem('introPlayed')) {
             document.body.style.overflow = 'hidden'; 
+            
             setTimeout(() => {
-                introLogo.classList.add('fly');
+                // Вираховуємо точні координати справжнього логотипу на екрані
+                const rect = realLogo.getBoundingClientRect();
+                
+                // Задаємо ці координати великому логотипу (він полетить рівно туди)
+                introLogo.style.top = rect.top + 'px';
+                introLogo.style.left = rect.left + 'px';
+                introLogo.style.height = rect.height + 'px';
+                introLogo.style.transform = 'translate(0, 0)';
+                
                 introOverlay.classList.add('hidden');
+                
                 setTimeout(() => {
                     introOverlay.style.display = 'none';
                     document.body.style.overflow = ''; 

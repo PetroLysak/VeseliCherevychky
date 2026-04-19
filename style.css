@@ -602,7 +602,7 @@ body.dark-theme #intro-overlay {
 
 /* Політ у лівий верхній кут */
 #intro-logo.fly {
-    top: 11px; /* Це положення всередині фіксованого хедера */
+    top: 11px; 
     left: 15px; 
     transform: translate(0, 0); 
     height: 60px; 
