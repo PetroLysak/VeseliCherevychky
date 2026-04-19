@@ -286,11 +286,11 @@ document.addEventListener('DOMContentLoaded', () => {
     if (scrollTopBtn) {
         window.addEventListener('scroll', () => {
             if (window.pageYOffset > 100) {
-                scrollTopBtn.style.visibility = 'visible';
-                scrollTopBtn.style.opacity = '1';
+                // Замість жорсткого style.opacity = '1', просто додаємо клас
+                scrollTopBtn.classList.add('show');
             } else {
-                scrollTopBtn.style.visibility = 'hidden';
-                scrollTopBtn.style.opacity = '0';
+                // Ховаємо кнопку, забираючи клас
+                scrollTopBtn.classList.remove('show');
             }
         });
         scrollTopBtn.addEventListener('click', () => window.scrollTo({ top: 0, behavior: 'smooth' }));
