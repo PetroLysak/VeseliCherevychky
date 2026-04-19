@@ -2,18 +2,9 @@
 /* Основні налаштування та Градієнт                 */
 /* ================================================= */
 
-/* 1. Додаємо відступ зверху для всього сайту, щоб контент не ховався під хедер */
-/* Відступи body підігнані під висоту фіксованого хедера */
 body {
-    padding-top: 92px; /* Для ПК */
+    /* Застосовуємо шрифт до всього сайту */
     font-family: 'Montserrat', sans-serif;
-    transition: background-color 0.3s, color 0.3s;
-}
-
-@media (max-width: 576px) {
-    body {
-        padding-top: 82px; /* Для мобільних (хедер стає трохи вужчим) */
-    }
 }
 
 .bg-custom-red {
@@ -264,53 +255,51 @@ footer .social-links a {
 /* ================================================= */
 /* Кнопка "Наверх"                                   */
 /* ================================================= */
+
 #scrollToTopBtn {
-    display: flex; 
+    /* Керується з JS: visibility: hidden/visible; opacity: 0/0.1; */
+    display: flex; /* Для центрування стрілки */
     visibility: hidden;
     opacity: 0;
 
-    position: sticky; 
+    position: sticky; /* Прилипає до <main> */
     bottom: 20px;
-    float: right; 
+    float: right; /* Праворуч */
     margin-right: 20px;
     z-index: 99;
 
     width: 50px;
     height: 50px;
-    border-radius: 50%; 
-    background-color: #f1f1f1; 
-    color: #333; 
+    border-radius: 50%; /* Кругла */
+    background-color: #f1f1f1; /* Світло-сірий */
+    color: #333; /* Темний колір стрілки */
 
     border: none;
     outline: none;
     cursor: pointer;
 
+    /* Flexbox для ідеального центрування псевдо-елемента */
     align-items: center;
     justify-content: center;
 
-    transition: opacity 0.3s, visibility 0.3s; 
+    transition: opacity 0.3s, visibility 0.3s; /* Плавна поява/зникнення */
 }
 
+/* Малюємо стрілку через псевдо-елемент і центруємо її вручну */
 #scrollToTopBtn::before {
-    content: '\2191'; 
-    font-size: 42px; 
+    content: '\2191'; /* Unicode стрілки вгору */
+    font-size: 42px; /* Розмір стрілки */
     font-weight: bold;
     position: relative;
-    top: -3px; 
+    top: -3px; /* "Підштовхуємо" стрілку вгору для візуального центрування */
 }
 
-/* === НОВИЙ КЛАС: Коли сторінка прокручена === */
-#scrollToTopBtn.show {
-    visibility: visible;
-    opacity: 0.2; /* Напівпрозора під час гортання (можете змінити від 0.1 до 0.9) */
+
+#scrollToTopBtn:hover {
+    opacity: 1 !important; /* Стає непрозорою при наведенні */
 }
 
-/* === СТАН ПРИ НАВЕДЕННІ === */
-#scrollToTopBtn.show:hover {
-    opacity: 1; /* Стає повністю чіткою */
-}
-
-/* Виправлення для float: right; */
+/* Виправлення для float: right; щоб кнопка не впливала на інші елементи */
 main.flex-grow-1::after {
     content: "";
     display: table;
@@ -507,103 +496,4 @@ body.dark-theme #scrollToTopBtn::before {
 }
 body.dark-theme #scrollToTopBtn:hover {
     background-color: #666;
-}
-
-/* Кнопка Пошуку (Лупа) - БЕЗ РАМКИ */
-#search-toggle {
-    border: none !important;
-    background: transparent;
-    color: white;
-    padding: 8px 12px;
-    border-radius: 6px;
-    transition: background-color 0.2s;
-}
-
-#search-toggle:hover {
-    background-color: rgba(255, 255, 255, 0.2) !important;
-}
-
-/* ================================================= */
-/* ПАНЕЛЬ ПОШУКУ (КОМПАКТНА СПРАВА)                 */
-/* ================================================= */
-/* 2. Оновлюємо панель пошуку, щоб вона була фіксованою і скролилася разом з хедером */
-#search-container {
-    position: fixed;    /* Змінено з absolute на fixed */
-    top: 93px;          /* Чітко під фіксованим хедером */
-    right: 20px;        
-    width: 350px;       
-    max-width: 90vw;    
-    z-index: 2000;      
-    background-color: #f8f9fa;
-    padding: 15px;
-    border: 1px solid #dee2e6;
-    border-top: none;   
-    border-radius: 0 0 10px 10px;
-    transition: all 0.3s ease;
-}
-
-#search-results .list-group-item {
-    display: flex;
-    align-items: center;
-    cursor: pointer;
-    border: none;
-    padding: 10px;
-}
-
-.search-preview {
-    width: 60px;
-    height: 40px;
-    object-fit: cover;
-    border-radius: 4px;
-    margin-right: 15px;
-}
-
-/* Темна тема для пошуку */
-/* 3. Корекція для темної теми */
-body.dark-theme #search-container {
-    background-color: #1a1a1a !important;
-    border: 1px solid #ffff00;
-    border-top: none;
-}
-/* ================================================= */
-/* АНІМАЦІЯ ПРИ ЗАВАНТАЖЕННІ (INDEX.HTML)            */
-/* ================================================= */
-#intro-overlay {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100vw;
-    height: 100vh;
-    background-color: #ffffff; /* Білий екран для світлої теми */
-    z-index: 9999;
-    transition: background-color 0.8s ease-in-out 0.2s; 
-}
-
-/* Чорний екран для темної теми */
-body.dark-theme #intro-overlay {
-    background-color: #000000;
-}
-
-#intro-overlay.hidden {
-    background-color: transparent !important;
-    pointer-events: none;
-}
-
-/* Велике лого по центру */
-#intro-logo {
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    height: 250px; 
-    width: auto;
-    transition: all 1s ease-in-out; 
-}
-
-/* Політ у лівий верхній кут */
-#intro-logo.fly {
-    top: 11px; 
-    left: 15px; 
-    transform: translate(0, 0); 
-    height: 60px; 
 }
