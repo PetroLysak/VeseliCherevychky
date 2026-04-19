@@ -258,10 +258,10 @@ document.addEventListener('DOMContentLoaded', () => {
         return grams;
     }
 
-    // Відкриття панелі при натисканні на лупу
+	// Відкриття панелі при натисканні на лупу
     if (searchToggle) {
-        searchToggle.addEventListener('click', (e) => {
-            e.stopPropagation(); // Зупиняємо подію, щоб не спрацювало закриття по кліку на документ
+        searchToggle.addEventListener('click', () => {
+            // Ми ВИДАЛИЛИ e.stopPropagation(); щоб меню теми могло закриватися
             searchContainer.classList.toggle('d-none');
             if (!searchContainer.classList.contains('d-none')) {
                 searchInput.focus();
@@ -273,7 +273,10 @@ document.addEventListener('DOMContentLoaded', () => {
     document.addEventListener('click', (event) => {
         if (searchContainer && !searchContainer.classList.contains('d-none')) {
             const isClickInsideSearch = searchContainer.contains(event.target);
-            if (!isClickInsideSearch) {
+            const isClickOnToggle = searchToggle.contains(event.target); // Перевіряємо, чи клік був по самій лупі
+            
+            // Закриваємо пошук ТІЛЬКИ якщо клікнули повз пошук І повз лупу
+            if (!isClickInsideSearch && !isClickOnToggle) {
                 searchContainer.classList.add('d-none');
             }
         }

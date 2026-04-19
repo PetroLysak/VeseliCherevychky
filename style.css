@@ -517,7 +517,7 @@ body.dark-theme #scrollToTopBtn:hover {
 /* ================================================= */
 #search-container {
     position: absolute; 
-    top: 85px;          /* <--- ДОДАНО: Це опускає панель чітко ПІД хедер */
+    top: 93px;          /* <--- ДОДАНО: Це опускає панель чітко ПІД хедер */
     right: 20px;        
     width: 350px;       
     max-width: 90vw;    
