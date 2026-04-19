@@ -1,5 +1,30 @@
-// Чекаємо, поки сторінка завантажиться
-document.addEventListener('DOMContentLoaded', () => {
+	// Чекаємо, поки сторінка завантажиться
+	document.addEventListener('DOMContentLoaded', () => {
+	
+	// ==========================================
+    // 0. АНІМАЦІЯ ПРИ ЗАХОДІ НА САЙТ
+    // ==========================================
+    const introOverlay = document.getElementById('intro-overlay');
+    const introLogo = document.getElementById('intro-logo');
+    
+    if (introOverlay && introLogo) {
+        if (!sessionStorage.getItem('introPlayed')) {
+            document.body.style.overflow = 'hidden'; 
+            
+            setTimeout(() => {
+                introLogo.classList.add('fly');
+                introOverlay.classList.add('hidden');
+                
+                setTimeout(() => {
+                    introOverlay.style.display = 'none';
+                    document.body.style.overflow = ''; 
+                    sessionStorage.setItem('introPlayed', 'true');
+                }, 1000); 
+            }, 300);
+        } else {
+            introOverlay.style.display = 'none';
+        }
+    }
     
     // ==========================================
     // 1. КАРУСЕЛЬ (на index.html)
@@ -354,5 +379,4 @@ document.addEventListener('DOMContentLoaded', () => {
             });
         }, 500); 
     }
-
 }); // КІНЕЦЬ DOMContentLoaded

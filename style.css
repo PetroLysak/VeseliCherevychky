@@ -552,3 +552,45 @@ body.dark-theme #search-container {
     border: 1px solid #ffff00;
     border-top: none;
 }
+/* ================================================= */
+/* АНІМАЦІЯ ПРИ ЗАВАНТАЖЕННІ (INDEX.HTML)            */
+/* ================================================= */
+#intro-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background-color: #ffffff; /* Білий екран для світлої теми */
+    z-index: 9999;
+    transition: background-color 0.8s ease-in-out 0.2s; 
+}
+
+/* Чорний екран для темної теми */
+body.dark-theme #intro-overlay {
+    background-color: #000000;
+}
+
+#intro-overlay.hidden {
+    background-color: transparent !important;
+    pointer-events: none;
+}
+
+/* Велике лого по центру */
+#intro-logo {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    height: 250px; 
+    width: auto;
+    transition: all 1s ease-in-out; 
+}
+
+/* Політ у лівий верхній кут */
+#intro-logo.fly {
+    top: 11px; 
+    left: 15px; 
+    transform: translate(0, 0); 
+    height: 60px; 
+}
