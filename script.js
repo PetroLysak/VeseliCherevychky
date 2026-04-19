@@ -340,7 +340,7 @@ document.addEventListener('DOMContentLoaded', () => {
         { name: "Лелеки", page: "teenage.html", yt: "_j4KUa4gDt8" }, { name: "Ліричний", page: "teenage.html", yt: "4_m5bu4xcww" },
         { name: "Любисток", page: "teenage.html", yt: "WwAH_pZGVC0" }, { name: "Народження Ісуса", page: "teenage.html", yt: "ip1R8xL8r14" },
         { name: "Небесна сотня", page: "teenage.html", yt: "CK-zHP8Avj0" }, { name: "Ніч", page: "teenage.html", yt: "ZlLM_GI7COo" },
-        { name: "Опришка", page: "teenage.html", yt: "YqZ8e8gK7Ss" }, { name: "Пліткарки", page: "teenage.html", yt: "QVYZTjErNf8" },
+        { name: "Опришки", page: "teenage.html", yt: "YqZ8e8gK7Ss" }, { name: "Пліткарки", page: "teenage.html", yt: "QVYZTjErNf8" },
         { name: "Подолянка", page: "teenage.html", yt: "qk70uRcYA4U" }, { name: "Полька богдашівська", page: "teenage.html", yt: "j2kqIAHatTM" },
         { name: "Полька львівська", page: "teenage.html", yt: "GKbv4mJW3zk" }, { name: "Притупи", page: "teenage.html", yt: "bzpTHqUXYaQ" },
         { name: "Рипуни (стара версія)", page: "teenage.html", yt: "N2nBb5EqjXc" }, { name: "Ти ж мене підманула", page: "teenage.html", yt: "-hdqJSpWnYE" },
