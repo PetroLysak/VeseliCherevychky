@@ -1,43 +1,52 @@
 /* ================================================= */
-/* Основні налаштування та Градієнт                 */
+/* Основні налаштування                              */
 /* ================================================= */
 
-/* 1. Додаємо відступ зверху для всього сайту, щоб контент не ховався під хедер */
-/* Відступи body підігнані під висоту фіксованого хедера */
 body {
-    padding-top: 92px; /* Для ПК */
+    padding-top: 92px; /* Для десктопу */
     font-family: 'Montserrat', sans-serif;
     transition: background-color 0.3s, color 0.3s;
 }
 
 @media (max-width: 576px) {
     body {
-        padding-top: 82px; /* Для мобільних (хедер стає трохи вужчим) */
+        padding-top: 82px; /* Для мобільних */
     }
 }
 
 .bg-custom-red {
-    background-color: #00008B; /* Запасний колір */
-    background-image: linear-gradient(to right, #87CEEB, #00008B); /* Градієнт */
+    background-color: #00008B;
+    background-image: linear-gradient(to right, #87CEEB, #00008B);
 }
 
 /* ================================================= */
 /* Хедер: Логотип та Навігація                       */
 /* ================================================= */
-/* Стилі для логотипу всередині navbar-brand */
+
 .navbar-brand .logo {
-    height: 60px; /* Ваш розмір */
+    height: 60px;
     width: auto;
-    margin: -5px 0; /* Ваші відступи */
+    margin: -5px 0;
     transition: opacity 0.2s;
 }
+
 .navbar-brand:hover .logo {
-     opacity: 0.8;
+    opacity: 0.8;
 }
 
-/* Кнопки навігації (без рамок) */
-.main-nav .btn.btn-outline-light, /* Старий селектор для сумісності, якщо десь лишився */
-.navbar-nav .nav-link.btn.btn-outline-light { /* Новий селектор для кнопок в navbar */
+/* Підсвічення активного пункту меню */
+.navbar-nav .nav-link.active-nav-link {
+    background-color: rgba(255, 255, 255, 0.25) !important;
+    color: white !important;
+}
+
+/* Підсвічення активної мови */
+.lang-switch.active-lang {
+    background-color: rgba(0, 0, 139, 0.1);
+}
+
+.main-nav .btn.btn-outline-light,
+.navbar-nav .nav-link.btn.btn-outline-light {
     border: none;
     font-family: 'Montserrat', sans-serif;
 }
@@ -53,74 +62,53 @@ body {
     box-shadow: none;
 }
 
-
 /* ================================================= */
-/* Головна сторінка: Карусель                      */
+/* Темна тема: лінії-розділювачі                     */
 /* ================================================= */
 
-#photoCarousel {
-    max-width: 700px; /* Максимальна ширина (і висота, бо 1:1) */
-    margin-left: auto;
-    margin-right: auto;
+body.dark-theme nav.navbar.bg-custom-red {
+    border-bottom: 1px solid #ffff00;
 }
 
-/* Примусово робимо ВСІ фото в каруселі квадратними (1:1), щоб уникнути стрибків */
-#photoCarousel .carousel-image { /* Уточнили селектор */
-    aspect-ratio: 1 / 1;      /* Встановлюємо співвідношення 1:1 */
-    object-fit: cover;      /* Масштабуємо фото, щоб заповнити квадрат, обрізаючи зайве */
-    width: 100%;            /* Займає всю ширину слайду */
-    height: auto;           /* Висота підлаштовується під aspect-ratio */
+body.dark-theme footer.bg-custom-red {
+    border-top: 1px solid #ffff00;
 }
 
 /* ================================================= */
-/* Адаптивність хедера (Мобільні - Бургер)          */
+/* Адаптивність хедера (Мобільні — Бургер)           */
 /* ================================================= */
 
-/* Робимо іконку бургера білою */
 .navbar-dark .navbar-toggler-icon {
-  background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 30 30'%3e%3cpath stroke='rgba%28255, 255, 255, 1%29' stroke-linecap='round' stroke-miterlimit='10' stroke-width='2' d='M4 7h22M4 15h22M4 23h22'/%3e%3c/svg%3e");
+    background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 30 30'%3e%3cpath stroke='rgba%28255, 255, 255, 1%29' stroke-linecap='round' stroke-miterlimit='10' stroke-width='2' d='M4 7h22M4 15h22M4 23h22'/%3e%3c/svg%3e");
 }
 
-/* Прибираємо рамку у кнопки бургера при фокусі */
 .navbar-dark .navbar-toggler {
     border-color: transparent;
 }
+
 .navbar-toggler:focus {
     box-shadow: none;
 }
 
-/* (НОВЕ) Жовті лінії-розділювачі */
-body.dark-theme nav.navbar.bg-custom-red {
-    border-bottom: 1px solid #ffff00; /* Жовта лінія ПІД хедером */
-}
-body.dark-theme footer.bg-custom-red {
-    border-top: 1px solid #ffff00; /* Жовта лінія НАД футером */
-}
-
-/* Стилі для розгорнутого меню на мобільних */
-@media (max-width: 575.98px) { /* Точка зупинки Bootstrap sm */
+@media (max-width: 575.98px) {
     .navbar-collapse {
-        /* Меню з'являється під хедером */
         position: absolute;
-        top: 100%; /* Одразу під хедером */
+        top: 100%;
         left: 0;
         right: 0;
-
-        /* Застосовуємо градієнт */
-        background-color: #00008B; /* Запасний колір */
-        background-image: linear-gradient(to right, #87CEEB, #00008B); /* Градієнт */
-
+        background-color: #00008B;
+        background-image: linear-gradient(to right, #87CEEB, #00008B);
         padding: 1rem;
         z-index: 1000;
         border-top: 1px solid rgba(255, 255, 255, 0.2);
     }
 
     .navbar-nav {
-        align-items: center; /* Центруємо посилання */
+        align-items: center;
     }
 
     .navbar-nav .nav-item {
-        margin-bottom: 0.5rem; /* Відступ між кнопками */
+        margin-bottom: 0.5rem;
     }
 
     .navbar-nav .nav-link.btn {
@@ -128,57 +116,72 @@ body.dark-theme footer.bg-custom-red {
         display: inline-block;
     }
 
-    /* Стилі кнопок у бургер-меню */
     .navbar-nav .nav-link.btn.btn-outline-light {
-        color: white; /* Забезпечуємо білий текст */
-        border: none; /* <-- Прибираємо рамку */
+        color: white;
+        border: none;
     }
+
     .navbar-nav .nav-link.btn.btn-outline-light:hover {
-         background-color: rgba(255, 255, 255, 0.3) !important; /* Робимо фон при наведенні світлішим */
-         /* border-color: ... -- видалено */
+        background-color: rgba(255, 255, 255, 0.3) !important;
     }
 }
 
+/* ================================================= */
+/* Головна сторінка: Карусель                        */
+/* ================================================= */
+
+#photoCarousel {
+    max-width: 700px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+#photoCarousel .carousel-image {
+    aspect-ratio: 1 / 1;
+    object-fit: cover;
+    width: 100%;
+    height: auto;
+}
 
 /* ================================================= */
-/* Сторінки Відео: Картки, Фото і Плеєри           */
+/* Сторінки відео: Картки, Фото і Плеєри            */
 /* ================================================= */
 
 .video-card {
-    transition: box-shadow 0.2s ease-in-out;
+    transition: box-shadow 0.2s ease-in-out, transform 0.2s ease-in-out;
     border: none;
+    cursor: pointer; /* Весь блок є клікабельним */
 }
 
 .video-card:hover {
-    box-shadow: 0 .5rem 1rem rgba(0,0,0,.15) !important;
+    box-shadow: 0 .5rem 1.5rem rgba(0, 0, 0, .18) !important;
+    transform: translateY(-2px);
 }
 
-/* Назва над відео/фото */
 .video-card .card-title {
     font-weight: 600;
     margin-bottom: 0;
-    background-color: #f8f9fa; /* Світлий фон */
+    background-color: #f8f9fa;
+    padding: 0.6rem 0.75rem;
+    font-size: 0.95rem;
 }
 
-/* Адаптивні ФОТО-заглушки (16:9) */
 .video-card .card-img-top {
-    border-top: 1px solid #dee2e6; /* Лінія-розділювач */
+    border-top: 1px solid #dee2e6;
     aspect-ratio: 16 / 9;
-    object-fit: cover; /* Обрізає фото під 16:9 */
+    object-fit: cover;
     width: 100%;
 }
 
-/* Адаптивний контейнер для ВІДЕО (16:9), коли воно завантажене */
+/* Адаптивний контейнер для відео */
 .embed-responsive-container {
     position: relative;
-    padding-bottom: 56.25%; /* Співвідношення 16:9 */
+    padding-bottom: 56.25%;
     height: 0;
     overflow: hidden;
     max-width: 100%;
-    /* Без border-top */
 }
 
-/* Сам плеєр (YouTube) всередині контейнера */
 .embed-responsive-container iframe {
     position: absolute;
     top: 0;
@@ -188,7 +191,7 @@ body.dark-theme footer.bg-custom-red {
 }
 
 /* ================================================= */
-/* Стилі для Плейсхолдера Відео (Lazy Load)         */
+/* Плейсхолдер відео (Lazy Load)                     */
 /* ================================================= */
 
 .video-placeholder {
@@ -197,7 +200,13 @@ body.dark-theme footer.bg-custom-red {
     overflow: hidden;
     aspect-ratio: 16 / 9;
     background-color: #eee;
-    border-top: 1px solid #dee2e6; /* Лінія, як у фото */
+    border-top: 1px solid #dee2e6;
+    outline: none; /* Прибираємо стандартний outline для tabindex */
+}
+
+.video-placeholder:focus-visible {
+    outline: 3px solid #00008B;
+    outline-offset: -3px;
 }
 
 .video-placeholder img.video-thumbnail {
@@ -208,11 +217,11 @@ body.dark-theme footer.bg-custom-red {
     transition: transform 0.3s ease;
 }
 
-.video-placeholder:hover img.video-thumbnail {
+.video-placeholder:hover img.video-thumbnail,
+.video-placeholder:focus-visible img.video-thumbnail {
     transform: scale(1.05);
 }
 
-/* Стиль для кнопки Play */
 .play-button {
     position: absolute;
     top: 50%;
@@ -225,10 +234,10 @@ body.dark-theme footer.bg-custom-red {
     display: flex;
     align-items: center;
     justify-content: center;
-    transition: background-color 0.3s ease;
+    transition: background-color 0.3s ease, transform 0.2s ease;
+    pointer-events: none; /* Не перехоплює кліки від батьківського елемента */
 }
 
-/* Малюємо трикутник "Play" */
 .play-button::after {
     content: '';
     display: block;
@@ -240,13 +249,114 @@ body.dark-theme footer.bg-custom-red {
     margin-left: 5px;
 }
 
-.video-placeholder:hover .play-button {
-    background-color: rgba(204, 0, 0, 0.8); /* Червоний при наведенні */
+.video-placeholder:hover .play-button,
+.video-placeholder:focus-visible .play-button {
+    background-color: rgba(204, 0, 0, 0.85);
+    transform: translate(-50%, -50%) scale(1.1);
 }
 
+/* Підсвічення картки при переході через пошук (jump) */
+.highlight-card {
+    outline: 3px solid #ffc107;
+    outline-offset: 2px;
+    border-radius: 4px;
+    animation: pulse-highlight 0.5s ease-in-out 3;
+}
+
+@keyframes pulse-highlight {
+    0%, 100% { box-shadow: 0 0 0 0 rgba(255, 193, 7, 0.4); }
+    50%       { box-shadow: 0 0 0 10px rgba(255, 193, 7, 0); }
+}
 
 /* ================================================= */
-/* Футер: Шрифти                                     */
+/* ВІДЕО-МОДАЛ (новий)                               */
+/* ================================================= */
+
+#video-modal {
+    display: none;
+    position: fixed;
+    inset: 0;
+    z-index: 10000;
+    align-items: center;
+    justify-content: center;
+}
+
+#video-modal.active {
+    display: flex;
+}
+
+#video-modal-backdrop {
+    position: absolute;
+    inset: 0;
+    background-color: rgba(0, 0, 0, 0.85);
+    backdrop-filter: blur(4px);
+}
+
+#video-modal-content {
+    position: relative;
+    z-index: 1;
+    width: min(90vw, 900px);
+    background: #000;
+    border-radius: 8px;
+    overflow: hidden;
+    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.7);
+    animation: modal-in 0.22s ease-out;
+}
+
+@keyframes modal-in {
+    from { opacity: 0; transform: scale(0.95); }
+    to   { opacity: 1; transform: scale(1); }
+}
+
+#video-modal-title {
+    color: #fff;
+    font-family: 'Montserrat', sans-serif;
+    font-weight: 700;
+    font-size: 1rem;
+    padding: 10px 48px 10px 16px;
+    background: linear-gradient(to right, #87CEEB22, #00008B);
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+#video-modal-close {
+    position: absolute;
+    top: 6px;
+    right: 10px;
+    background: transparent;
+    border: none;
+    color: #fff;
+    font-size: 1.3rem;
+    cursor: pointer;
+    line-height: 1;
+    padding: 4px 8px;
+    border-radius: 4px;
+    transition: background 0.2s;
+    z-index: 2;
+}
+
+#video-modal-close:hover,
+#video-modal-close:focus-visible {
+    background: rgba(255, 255, 255, 0.2);
+    outline: none;
+}
+
+#video-modal-player {
+    position: relative;
+    padding-bottom: 56.25%;
+    height: 0;
+}
+
+#video-modal-player iframe {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+}
+
+/* ================================================= */
+/* Футер                                             */
 /* ================================================= */
 
 footer.bg-custom-red {
@@ -254,269 +364,136 @@ footer.bg-custom-red {
 }
 
 footer .h5 {
-    font-weight: 700; /* Жирний */
+    font-weight: 700;
 }
 
 footer .social-links a {
-    font-weight: 700; /* Жирний */
+    font-weight: 700;
 }
 
 /* ================================================= */
 /* Кнопка "Наверх"                                   */
 /* ================================================= */
+
 #scrollToTopBtn {
-    display: flex; 
+    /* BUG FIX: display:flex + visibility:hidden не викликає проблем,
+       але для кращої підтримки використовуємо position:fixed */
+    position: fixed;
+    bottom: 24px;
+    right: 24px;
+    z-index: 999;
+
+    display: flex;
     visibility: hidden;
     opacity: 0;
-
-    position: sticky; 
-    bottom: 20px;
-    float: right; 
-    margin-right: 20px;
-    z-index: 99;
-
-    width: 50px;
-    height: 50px;
-    border-radius: 50%; 
-    background-color: #f1f1f1; 
-    color: #333; 
-
-    border: none;
-    outline: none;
-    cursor: pointer;
-
     align-items: center;
     justify-content: center;
 
-    transition: opacity 0.3s, visibility 0.3s; 
+    width: 48px;
+    height: 48px;
+    border-radius: 50%;
+    background-color: #f1f1f1;
+    color: #333;
+    border: none;
+    outline: none;
+    cursor: pointer;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+
+    transition: opacity 0.3s, visibility 0.3s, transform 0.2s;
 }
 
+/* BUG FIX: прибираємо застарілий float + clearfix, замінюємо на position:fixed */
 #scrollToTopBtn::before {
-    content: '\2191'; 
-    font-size: 42px; 
+    content: '\2191';
+    font-size: 26px;
     font-weight: bold;
-    position: relative;
-    top: -3px; 
+    line-height: 1;
 }
 
-/* === НОВИЙ КЛАС: Коли сторінка прокручена === */
 #scrollToTopBtn.show {
     visibility: visible;
-    opacity: 0.2; /* Напівпрозора під час гортання (можете змінити від 0.1 до 0.9) */
+    opacity: 0.6;
 }
 
-/* === СТАН ПРИ НАВЕДЕННІ === */
 #scrollToTopBtn.show:hover {
-    opacity: 1; /* Стає повністю чіткою */
+    opacity: 1;
+    transform: scale(1.1);
 }
 
-/* Виправлення для float: right; */
-main.flex-grow-1::after {
-    content: "";
-    display: table;
-    clear: both;
-}
 /* ================================================= */
-/* Стилі для сторінки "Про нас"             */
+/* Соціальні іконки                                  */
 /* ================================================= */
 
-/* Колір рамки для круглих фото */
-.border-custom-dark-blue {
-    border-color: #00008B !important; /* Темно-синій, як кінець градієнту */
-}
-
-/* Стилі для круглих фото */
-.about-image {
-    max-width: 250px; /* Обмеження розміру, щоб не були завеликі */
-    width: 100%;
-    height: auto;
-    aspect-ratio: 1 / 1; /* Робить елемент квадратним перед округленням */
-    object-fit: cover;   /* Масштабує фото, щоб заповнити коло */
-    background-color: #87CEEB; /* Голубий фон */
-	border-width: 5px !important; /* Та сама жирна товщина */
-    border-style: solid !important;
-}
-	/* 2. Колір рамки для світлої теми (темно-синій) */
-	body:not(.dark-theme) .about-image {
-		border-color: #00008B !important; 
-	}
-
-/* Контейнер для іконок під кожним фото */
-.social-icons-group {
-     margin-top: 10px; /* Відступ зверху від тексту */
-}
-
-/* Стилі для маленьких іконок соцмереж */
 .social-icon {
-    width: 40px;  /* Розмір іконок */
+    width: 40px;
     height: 40px;
-    margin: 0 5px; /* Зменшені відступи між іконками */
-    object-fit: contain; /* Щоб логотип вмістився, не обрізаючись */
-    transition: opacity 0.2s; /* Плавність при наведенні */
+    margin: 0 5px;
+    object-fit: contain;
+    transition: opacity 0.2s;
 }
 
-/* Ефект при наведенні на іконку-посилання */
 a:hover .social-icon {
     opacity: 0.7;
 }
+
 /* ================================================= */
-/* Виправлення для сторінки "Про нас"               */
+/* Сторінка "Про нас"                                */
 /* ================================================= */
 
-/* Прибираємо підкреслення у посилань з іконками соцмереж */
 .social-icons-group a {
-    text-decoration: none; /* Вимикає підкреслення */
-    border-bottom: none;   /* Додатково прибирає можливу нижню межу */
+    text-decoration: none;
+    border-bottom: none;
 }
 
-/* (Необов'язково) Прибирає синій контур, який може з'являтися при кліку */
 .social-icons-group a:focus {
     outline: none;
     box-shadow: none;
 }
 
+.border-custom-dark-blue {
+    border-color: #00008B !important;
+}
+
+.about-image {
+    max-width: 250px;
+    width: 100%;
+    height: auto;
+    aspect-ratio: 1 / 1;
+    object-fit: cover;
+    background-color: #87CEEB;
+    border-width: 5px !important;
+    border-style: solid !important;
+}
+
+body:not(.dark-theme) .about-image {
+    border-color: #00008B !important;
+}
+
 /* ================================================= */
-/* Стилі для Перемикача Тем (Світла/Темна)          */
+/* Перемикач тем                                     */
 /* ================================================= */
 
-/* Кнопка перемикання теми в хедері */
 .theme-toggle-btn {
     border: none;
-    padding: 0.375rem 0.5rem; /* Зменшені падінги */
-    font-size: 1.2rem; /* Розмір іконки */
+    padding: 0.375rem 0.5rem;
+    font-size: 1.2rem;
 }
-.theme-toggle-btn:focus, .theme-toggle-btn:active {
+
+.theme-toggle-btn:focus,
+.theme-toggle-btn:active {
     box-shadow: none !important;
     outline: none !important;
 }
+
 .theme-toggle-btn:hover {
-     background-color: rgba(255, 255, 255, 0.2) !important;
-     color: white !important;
-}
-
-/* Вирівнювання іконок в меню вибору теми */
-.dropdown-item > span { /* Це для випадку, якщо ви додасте іконки до пунктів меню */
-    margin-right: 0.5rem;
+    background-color: rgba(255, 255, 255, 0.2) !important;
+    color: white !important;
 }
 
 /* ================================================= */
-/* Стилі для ТЕМНОЇ ТЕМИ                            */
+/* Кнопка пошуку                                     */
 /* ================================================= */
 
-body.dark-theme {
-    background-color: #000000; /* Чорний фон для <body> */
-    color: #ffffff; /* Білий текст за замовчуванням */
-}
-
-/* --- Хедер і Футер --- */
-body.dark-theme .bg-custom-red {
-    background-color: #000000 !important; /* Чорний фон */
-    background-image: none !important; /* Прибираємо градієнт */
-}
-/* Робимо фон випадаючого бургер-меню теж чорним */
-@media (max-width: 575.98px) {
-    body.dark-theme .navbar-collapse {
-        background-color: #000000 !important;
-        background-image: none !important;
-        border-top-color: rgba(255, 255, 255, 0.1); /* Лінія трохи темніша */
-    }
-    body.dark-theme .navbar-nav .nav-link.btn.btn-outline-light:hover {
-         background-color: rgba(255, 255, 255, 0.15) !important; /* Фон при наведенні трохи інший */
-    }
-}
-
-/* --- Dropdown Меню Теми (Темна тема) --- */
-body.dark-theme .dropdown-menu {
-    background-color: #000000; /* Чорний фон */
-    border-color: rgba(255, 255, 255, 0.15); /* Трохи світліша рамка */
-}
-body.dark-theme .dropdown-item {
-    color: #ffffff; /* Білий текст */
-}
-body.dark-theme .dropdown-item:hover,
-body.dark-theme .dropdown-item:focus {
-    background-color: #343a40; /* Темно-сірий фон при наведенні/фокусі */
-    color: #ffffff; /* Текст залишається білим */
-}
-/* Колір кнопки перемикання теми в темному режимі */
-body.dark-theme .theme-toggle-btn {
-    color: #ffffff; /* Переконуємось, що іконка біла */
-}
-body.dark-theme .theme-toggle-btn:hover {
-     background-color: rgba(255, 255, 255, 0.15) !important; /* Трохи інший фон при наведенні */
-}
-
-
-/* --- Основний контент --- */
-body.dark-theme main.bg-white {
-    background-color: #000000 !important; /* Чорний фон */
-}
-
-/* --- Текст --- */
-body.dark-theme h1,
-body.dark-theme h2,
-body.dark-theme h3,
-body.dark-theme h4,
-body.dark-theme h5,
-body.dark-theme h6,
-body.dark-theme p,
-body.dark-theme .lead { /* Додаємо .lead для опису */
-    color: #ffffff; /* Білий текст */
-}
-
-/* Виняток: червоний текст на головній сторінці */
-body.dark-theme .description-block .text-danger {
-    color: #dc3545 !important; /* Залишаємо червоним */
-}
-
-/* Назви танців/викладачів */
-body.dark-theme .video-card .card-title {
-     background-color: #343a40; /* Темно-сірий фон */
-     color: #ffffff; /* Білий текст */
-}
-
-/* Лінія над фото/відео заглушкою */
-body.dark-theme .video-card .card-img-top,
-body.dark-theme .video-placeholder {
-     border-top-color: #495057; /* Темніша лінія розділення */
-}
-
-
-/* --- Карусель на головній --- */
-body.dark-theme #photoCarousel .carousel-inner {
-    border-color: #ffff00 !important; /* Жовта рамка */
-}
-
-/* --- Сторінка "Про нас" --- */
-/* Рамка навколо фото */
-body.dark-theme .border-custom-dark-blue {
-    border-color: #ffff00 !important; /* Жовтий */
-}
-/* Світло-жовтий фон для фото у "Про нас" у темній темі */
-body.dark-theme .about-image {
-    background-color: #ffffe0 !important; /* Колір LightYellow */
-    border-color: #ffff00 !important;      /* До кучі фіксуємо жовту рамку */
-}
-/* Горизонтальна лінія */
-body.dark-theme hr {
-    /* Використовуємо border-top замість background-color для hr */
-    border-top: 1px solid rgba(255, 255, 255, 0.2); /* Світліша лінія */
-    opacity: 1; /* Робимо лінію повністю видимою */
-}
-
-/* --- Кнопка "Наверх" --- */
-body.dark-theme #scrollToTopBtn {
-    background-color: #444; /* Темніший фон */
-    color: #eee; /* Світліша стрілка */
-}
-body.dark-theme #scrollToTopBtn::before {
-     color: #eee; /* Світліша стрілка */
-}
-body.dark-theme #scrollToTopBtn:hover {
-    background-color: #666;
-}
-
-/* Кнопка Пошуку (Лупа) - БЕЗ РАМКИ */
 #search-toggle {
     border: none !important;
     background: transparent;
@@ -531,22 +508,33 @@ body.dark-theme #scrollToTopBtn:hover {
 }
 
 /* ================================================= */
-/* ПАНЕЛЬ ПОШУКУ (КОМПАКТНА СПРАВА)                 */
+/* ПАНЕЛЬ ПОШУКУ                                     */
 /* ================================================= */
-/* 2. Оновлюємо панель пошуку, щоб вона була фіксованою і скролилася разом з хедером */
+
 #search-container {
-    position: fixed;    /* Змінено з absolute на fixed */
-    top: 93px;          /* Чітко під фіксованим хедером */
-    right: 20px;        
-    width: 350px;       
-    max-width: 90vw;    
-    z-index: 2000;      
+    position: fixed;
+    /* BUG FIX: різні значення top для десктопу і мобільного */
+    top: 93px;
+    right: 20px;
+    width: 350px;
+    max-width: calc(100vw - 20px); /* BUG FIX: не виходить за межі екрана на малих телефонах */
+    z-index: 2000;
     background-color: #f8f9fa;
     padding: 15px;
     border: 1px solid #dee2e6;
-    border-top: none;   
+    border-top: none;
     border-radius: 0 0 10px 10px;
     transition: all 0.3s ease;
+}
+
+@media (max-width: 576px) {
+    #search-container {
+        top: 82px; /* BUG FIX: відповідає мобільному padding-top body */
+        right: 0;
+        width: 100%;
+        max-width: 100%;
+        border-radius: 0 0 8px 8px;
+    }
 }
 
 #search-results .list-group-item {
@@ -555,6 +543,14 @@ body.dark-theme #scrollToTopBtn:hover {
     cursor: pointer;
     border: none;
     padding: 10px;
+    border-radius: 4px;
+    margin-bottom: 2px;
+    transition: background-color 0.15s;
+}
+
+#search-results .list-group-item:focus {
+    outline: 2px solid #00008B;
+    background-color: #e9ecef;
 }
 
 .search-preview {
@@ -563,30 +559,24 @@ body.dark-theme #scrollToTopBtn:hover {
     object-fit: cover;
     border-radius: 4px;
     margin-right: 15px;
+    flex-shrink: 0;
 }
 
-/* Темна тема для пошуку */
-/* 3. Корекція для темної теми */
-body.dark-theme #search-container {
-    background-color: #1a1a1a !important;
-    border: 1px solid #ffff00;
-    border-top: none;
-}
 /* ================================================= */
 /* АНІМАЦІЯ ПРИ ЗАВАНТАЖЕННІ (INDEX.HTML)            */
 /* ================================================= */
+
 #intro-overlay {
     position: fixed;
     top: 0;
     left: 0;
     width: 100vw;
     height: 100vh;
-    background-color: #ffffff; /* Білий екран для світлої теми */
+    background-color: #ffffff;
     z-index: 9999;
-    transition: background-color 0.8s ease-in-out 0.2s; 
+    transition: background-color 0.8s ease-in-out 0.2s;
 }
 
-/* Чорний екран для темної теми */
 body.dark-theme #intro-overlay {
     background-color: #000000;
 }
@@ -596,21 +586,170 @@ body.dark-theme #intro-overlay {
     pointer-events: none;
 }
 
-/* Велике лого по центру */
 #intro-logo {
     position: absolute;
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
-    height: 250px; 
+    height: 250px;
     width: auto;
-    transition: all 1s ease-in-out; 
+    transition: all 1s ease-in-out;
 }
 
-/* Політ у лівий верхній кут */
 #intro-logo.fly {
-    top: 11px; 
-    left: 15px; 
-    transform: translate(0, 0); 
-    height: 60px; 
+    top: 11px;
+    left: 15px;
+    transform: translate(0, 0);
+    height: 60px;
+}
+
+/* ================================================= */
+/* ТЕМНА ТЕМА                                        */
+/* ================================================= */
+
+body.dark-theme {
+    background-color: #000000;
+    color: #ffffff;
+}
+
+body.dark-theme .bg-custom-red {
+    background-color: #000000 !important;
+    background-image: none !important;
+}
+
+@media (max-width: 575.98px) {
+    body.dark-theme .navbar-collapse {
+        background-color: #000000 !important;
+        background-image: none !important;
+        border-top-color: rgba(255, 255, 255, 0.1);
+    }
+    body.dark-theme .navbar-nav .nav-link.btn.btn-outline-light:hover {
+        background-color: rgba(255, 255, 255, 0.15) !important;
+    }
+}
+
+body.dark-theme .dropdown-menu {
+    background-color: #111;
+    border-color: rgba(255, 255, 255, 0.15);
+}
+
+body.dark-theme .dropdown-item {
+    color: #ffffff;
+}
+
+body.dark-theme .dropdown-item:hover,
+body.dark-theme .dropdown-item:focus {
+    background-color: #343a40;
+    color: #ffffff;
+}
+
+body.dark-theme .theme-toggle-btn {
+    color: #ffffff;
+}
+
+body.dark-theme .theme-toggle-btn:hover {
+    background-color: rgba(255, 255, 255, 0.15) !important;
+}
+
+body.dark-theme main.bg-white {
+    background-color: #000000 !important;
+}
+
+body.dark-theme h1,
+body.dark-theme h2,
+body.dark-theme h3,
+body.dark-theme h4,
+body.dark-theme h5,
+body.dark-theme h6,
+body.dark-theme p,
+body.dark-theme .lead {
+    color: #ffffff;
+}
+
+body.dark-theme .description-block .text-danger {
+    color: #dc3545 !important;
+}
+
+body.dark-theme .video-card .card-title {
+    background-color: #1e1e1e;
+    color: #ffffff;
+}
+
+body.dark-theme .video-card {
+    background-color: #111;
+}
+
+body.dark-theme .video-card:hover {
+    box-shadow: 0 .5rem 1.5rem rgba(255, 255, 255, .07) !important;
+}
+
+body.dark-theme .video-card .card-img-top,
+body.dark-theme .video-placeholder {
+    border-top-color: #333;
+}
+
+body.dark-theme #photoCarousel .carousel-inner {
+    border-color: #ffff00 !important;
+}
+
+body.dark-theme .border-custom-dark-blue {
+    border-color: #ffff00 !important;
+}
+
+body.dark-theme .about-image {
+    background-color: #ffffe0 !important;
+    border-color: #ffff00 !important;
+}
+
+body.dark-theme hr {
+    border-top: 1px solid rgba(255, 255, 255, 0.2);
+    opacity: 1;
+}
+
+body.dark-theme #scrollToTopBtn {
+    background-color: #333;
+    color: #eee;
+}
+
+body.dark-theme #scrollToTopBtn:hover {
+    background-color: #555;
+}
+
+body.dark-theme #search-container {
+    background-color: #1a1a1a;
+    border-color: #ffff00;
+    border-top: none;
+}
+
+body.dark-theme #search-results .list-group-item {
+    background-color: #1a1a1a;
+    color: #ffffff;
+}
+
+body.dark-theme #search-results .list-group-item:hover,
+body.dark-theme #search-results .list-group-item:focus {
+    background-color: #2a2a2a;
+    color: #ffffff;
+}
+
+body.dark-theme #search-results .list-group-item.text-muted {
+    color: #aaa !important;
+}
+
+body.dark-theme #search-input {
+    background-color: #2a2a2a;
+    color: #ffffff;
+    border-color: #444;
+}
+
+body.dark-theme #search-input::placeholder {
+    color: #888;
+}
+
+body.dark-theme .video-placeholder {
+    background-color: #1a1a1a;
+}
+
+body.dark-theme .lang-switch.active-lang {
+    background-color: rgba(255, 255, 255, 0.1);
 }
