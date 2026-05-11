@@ -300,119 +300,14 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     // ==========================================
-    // 3. ВІДЕО-МОДАЛ (нова функція: перегляд відео без переходу зі сторінки)
+    // 3б. ДОВІДНИКИ ДАНИХ (використовуються в секціях 4, 4б, 7, 8)
     // ==========================================
-    // Створюємо модал один раз і використовуємо повторно
-    if (!document.getElementById('video-modal')) {
-        const modalHTML = `
-        <div id="video-modal" role="dialog" aria-modal="true" aria-label="Перегляд відео">
-            <div id="video-modal-backdrop"></div>
-            <div id="video-modal-content">
-                <button id="video-modal-close" aria-label="Закрити відео">✕</button>
-                <div id="video-modal-title"></div>
-                <div id="video-modal-player"></div>
-            </div>
-        </div>`;
-        document.body.insertAdjacentHTML('beforeend', modalHTML);
-    }
 
-    const videoModal = document.getElementById('video-modal');
-    const videoModalPlayer = document.getElementById('video-modal-player');
-    const videoModalTitle = document.getElementById('video-modal-title');
-    const videoModalClose = document.getElementById('video-modal-close');
-    const videoModalBackdrop = document.getElementById('video-modal-backdrop');
-
-    function openVideoModal(youtubeId, title) {
-        videoModalTitle.textContent = title || '';
-        videoModalPlayer.innerHTML = `<iframe
-            src="https://www.youtube.com/embed/${youtubeId}?autoplay=1"
-            title="${title || 'YouTube video player'}"
-            frameborder="0"
-            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-            referrerpolicy="strict-origin-when-cross-origin"
-            allowfullscreen></iframe>`;
-        videoModal.classList.add('active');
-        document.body.style.overflow = 'hidden';
-        videoModalClose.focus();
-    }
-
-    function closeVideoModal() {
-        videoModal.classList.remove('active');
-        videoModalPlayer.innerHTML = ''; // Зупиняємо відео
-        document.body.style.overflow = '';
-    }
-
-    if (videoModalClose) videoModalClose.addEventListener('click', closeVideoModal);
-    if (videoModalBackdrop) videoModalBackdrop.addEventListener('click', closeVideoModal);
-
-    // Закриття по клавіші Escape
-    document.addEventListener('keydown', (e) => {
-        if (e.key === 'Escape' && videoModal && videoModal.classList.contains('active')) {
-            closeVideoModal();
-        }
-    });
-
-    // ==========================================
-    // 4. ЗАВАНТАЖЕННЯ ВІДЕО ПО КЛІКУ (з підтримкою модала)
-    // ==========================================
-    document.querySelectorAll('.video-placeholder').forEach(placeholder => {
-        placeholder.addEventListener('click', () => {
-            const youtubeId = placeholder.dataset.youtubeId;
-            if (!youtubeId) return;
-
-            // Знаходимо назву з h5 в тій самій картці
-            const card = placeholder.closest('.video-card');
-            const title = card ? (card.querySelector('.card-title')?.dataset.origText || card.querySelector('.card-title')?.innerText || '') : '';
-
-            openVideoModal(youtubeId, title);
-        });
-
-        // Доступність: підтримка клавіатурного Enter/Space
-        placeholder.setAttribute('role', 'button');
-        placeholder.setAttribute('tabindex', '0');
-        placeholder.addEventListener('keydown', (e) => {
-            if (e.key === 'Enter' || e.key === ' ') {
-                e.preventDefault();
-                placeholder.click();
-            }
-        });
-    });
-
-    // ==========================================
-    // 5. КНОПКА "НАВЕРХ"
-    // ==========================================
-    const scrollTopBtn = document.getElementById('scrollToTopBtn');
-    if (scrollTopBtn) {
-        window.addEventListener('scroll', () => {
-            scrollTopBtn.classList.toggle('show', window.pageYOffset > 200);
-        }, { passive: true });
-        scrollTopBtn.addEventListener('click', () => window.scrollTo({ top: 0, behavior: 'smooth' }));
-    }
-
-    // ==========================================
-    // 6. ПЕРЕМИКАЧ ТЕМ
-    // ==========================================
-    const lightThemeBtn = document.getElementById('light-theme-btn');
-    const darkThemeBtn = document.getElementById('dark-theme-btn');
-    const themeIconContainer = document.getElementById('theme-icon-container');
-
-    const sunIcon = `<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-sun" viewBox="0 0 16 16"><path d="M8 11a3 3 0 1 1 0-6 3 3 0 0 1 0 6zm0 1a4 4 0 1 0 0-8 4 4 0 0 0 0 8zM8 0a.5.5 0 0 1 .5.5v2a.5.5 0 0 1-1 0v-2A.5.5 0 0 1 8 0zm0 13a.5.5 0 0 1 .5.5v2a.5.5 0 0 1-1 0v-2A.5.5 0 0 1 8 13zm8-5a.5.5 0 0 1-.5.5h-2a.5.5 0 0 1 0-1h2a.5.5 0 0 1 .5.5zM3 8a.5.5 0 0 1-.5.5h-2a.5.5 0 0 1 0-1h2A.5.5 0 0 1 3 8zm10.657-5.657a.5.5 0 0 1 0 .707l-1.414 1.415a.5.5 0 1 1-.707-.708l1.414-1.414a.5.5 0 0 1 .707 0zm-9.193 9.193a.5.5 0 0 1 0 .707L3.05 13.657a.5.5 0 0 1-.707-.707l1.414-1.414a.5.5 0 0 1 .707 0zm9.193 2.121a.5.5 0 0 1-.707 0l-1.414-1.414a.5.5 0 0 1 .707-.707l1.414 1.414a.5.5 0 0 1 0 .707zM4.464 4.465a.5.5 0 0 1-.707 0L2.343 3.05a.5.5 0 1 1 .707-.707l1.414 1.414a.5.5 0 0 1 0 .708z"/></svg>`;
-    const moonIcon = `<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-moon-stars" viewBox="0 0 16 16"><path d="M6 .278a.768.768 0 0 1 .08.858 7.208 7.208 0 0 0-.878 3.46c0 4.021 3.278 7.277 7.318 7.277.527 0 1.04-.055 1.533-.16a.787.787 0 0 1 .81.316.733.733 0 0 1-.031.893A8.349 8.349 0 0 1 8.344 16C3.734 16 0 12.286 0 7.71 0 4.266 2.114 1.312 5.124.06A.752.752 0 0 1 6 .278zM10.794 3.148a.217.217 0 0 1 .412 0l.387 1.162h1.234a.217.217 0 0 1 .153.372l-.986.754.387 1.162a.217.217 0 0 1-.316.242l-.986-.754-.986.754a.217.217 0 0 1-.316-.242l.387-1.162-.986-.754a.217.217 0 0 1 .153-.372h1.234l.387-1.162zM13.863.099a.145.145 0 0 1 .274 0l.258.774c.115.346.386.617.732.732l.774.258a.145.145 0 0 1 0 .274l-.774.258a1.156 1.156 0 0 0-.732.732l-.258.774a.145.145 0 0 1-.274 0l-.258-.774a1.156 1.156 0 0 0-.732-.732l-.774-.258a.145.145 0 0 1 0-.274l.774-.258c.346-.115.617-.386.732-.732L13.863.1z"/></svg>`;
-
-    const updateTheme = (theme) => {
-        if (theme === 'dark') {
-            document.body.classList.add('dark-theme');
-            if (themeIconContainer) themeIconContainer.innerHTML = moonIcon;
-        } else {
-            document.body.classList.remove('dark-theme');
-            if (themeIconContainer) themeIconContainer.innerHTML = sunIcon;
-        }
-        localStorage.setItem('theme', theme);
+    const pageLabels = {
+        'teenage.html':     { uk: 'Підліткова', en: 'Teenagers', fr: 'Adolescents' },
+        'preparatory.html': { uk: 'Підготовча', en: 'Preparatory', fr: 'Préparatoire' },
+        'small.html':       { uk: 'Малі', en: 'Kids', fr: 'Enfants' }
     };
-
-    updateTheme(currentTheme);
-    if (lightThemeBtn) lightThemeBtn.addEventListener('click', () => updateTheme('light'));
-    if (darkThemeBtn) darkThemeBtn.addEventListener('click', () => updateTheme('dark'));
 
     // ==========================================
     // 7. БАЗА ДАНИХ ТАНЦІВ І ЛОГІКА ПОШУКУ
@@ -509,10 +404,389 @@ document.addEventListener('DOMContentLoaded', () => {
         { name: "Чоботята", page: "small.html", yt: "dJdSI_hhW30" }
     ];
 
+    // DOM-елементи пошуку — оголошуємо тут, щоб бути доступними у секціях 4 і 4б
     const searchToggle = document.getElementById('search-toggle');
     const searchContainer = document.getElementById('search-container');
     const searchInput = document.getElementById('search-input');
     const searchResults = document.getElementById('search-results');
+
+    // ==========================================
+    // 3. ВІДЕО-МОДАЛ
+    // ==========================================
+    if (!document.getElementById('video-modal')) {
+        const modalHTML = `
+        <div id="video-modal" role="dialog" aria-modal="true" aria-labelledby="video-modal-title">
+            <div id="video-modal-backdrop"></div>
+            <div id="video-modal-content">
+                <div id="video-modal-header">
+                    <div id="video-modal-title"></div>
+                    <div id="video-modal-actions">
+                        <button id="video-modal-fav" aria-label="Додати до улюблених" title="Улюблене">♡</button>
+                        <button id="video-modal-share" aria-label="Скопіювати посилання" title="Поділитися">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="15" height="15" fill="currentColor" viewBox="0 0 16 16">
+                                <path d="M13.5 1a1.5 1.5 0 1 0 0 3 1.5 1.5 0 0 0 0-3zM11 2.5a2.5 2.5 0 1 1 .603 1.628l-6.718 3.12a2.499 2.499 0 0 1 0 1.504l6.718 3.12a2.5 2.5 0 1 1-.488.876l-6.718-3.12a2.5 2.5 0 1 1 0-3.256l6.718-3.12A2.5 2.5 0 0 1 11 2.5z"/>
+                            </svg>
+                        </button>
+                        <button id="video-modal-close" aria-label="Закрити відео">✕</button>
+                    </div>
+                </div>
+                <div id="video-modal-player"></div>
+                <div id="video-modal-toast" aria-live="polite"></div>
+            </div>
+        </div>`;
+        document.body.insertAdjacentHTML('beforeend', modalHTML);
+    }
+
+    const videoModal        = document.getElementById('video-modal');
+    const videoModalPlayer  = document.getElementById('video-modal-player');
+    const videoModalTitle   = document.getElementById('video-modal-title');
+    const videoModalClose   = document.getElementById('video-modal-close');
+    const videoModalBackdrop= document.getElementById('video-modal-backdrop');
+    const videoModalShare   = document.getElementById('video-modal-share');
+    const videoModalFav     = document.getElementById('video-modal-fav');
+    const videoModalToast   = document.getElementById('video-modal-toast');
+
+    // Поточний відкритий танець у модалі
+    let currentModalDance = null; // { yt, name (origName), page }
+
+    // ---- Улюблені (localStorage) ----
+    function getFavourites() {
+        try { return JSON.parse(localStorage.getItem('vc_favourites') || '[]'); }
+        catch { return []; }
+    }
+    function saveFavourites(favs) {
+        localStorage.setItem('vc_favourites', JSON.stringify(favs));
+    }
+    function isFavourite(ytId) {
+        return getFavourites().includes(ytId);
+    }
+    function toggleFavourite(ytId) {
+        let favs = getFavourites();
+        if (favs.includes(ytId)) {
+            favs = favs.filter(id => id !== ytId);
+        } else {
+            favs.push(ytId);
+        }
+        saveFavourites(favs);
+        return favs.includes(ytId);
+    }
+
+    function updateFavButton(ytId) {
+        if (!videoModalFav) return;
+        const isFav = isFavourite(ytId);
+        videoModalFav.textContent = isFav ? '♥' : '♡';
+        videoModalFav.classList.toggle('is-fav', isFav);
+        videoModalFav.setAttribute('aria-label', isFav ? 'Видалити з улюблених' : 'Додати до улюблених');
+    }
+
+    // ---- Показ тосту ----
+    let toastTimer;
+    function showToast(msg) {
+        if (!videoModalToast) return;
+        videoModalToast.textContent = msg;
+        videoModalToast.classList.add('show');
+        clearTimeout(toastTimer);
+        toastTimer = setTimeout(() => videoModalToast.classList.remove('show'), 2500);
+    }
+
+    // ---- Пауза / зупинка iframe ----
+    function pauseModalVideo() {
+        const iframe = videoModalPlayer.querySelector('iframe');
+        if (iframe) {
+            // Надсилаємо команду паузи через YouTube postMessage API
+            iframe.contentWindow?.postMessage('{"event":"command","func":"pauseVideo","args":""}', '*');
+        }
+    }
+    function stopModalVideo() {
+        videoModalPlayer.innerHTML = '';
+    }
+
+    // ---- Відкрити модал ----
+    function openVideoModal(ytId, title, dance) {
+        currentModalDance = dance || null;
+        videoModalTitle.textContent = title || '';
+        stopModalVideo(); // Зупиняємо попереднє відео
+        videoModalPlayer.innerHTML = `<iframe
+            id="yt-iframe"
+            src="https://www.youtube.com/embed/${ytId}?autoplay=1&enablejsapi=1"
+            title="${title || 'YouTube video player'}"
+            frameborder="0"
+            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+            referrerpolicy="strict-origin-when-cross-origin"
+            allowfullscreen></iframe>`;
+        videoModal.classList.add('active');
+        document.body.style.overflow = 'hidden';
+        updateFavButton(ytId);
+        videoModalClose.focus();
+    }
+
+    // ---- Закрити модал ----
+    function closeVideoModal() {
+        videoModal.classList.remove('active');
+        stopModalVideo();
+        document.body.style.overflow = '';
+        currentModalDance = null;
+    }
+
+    // Клік по кнопці ✕ — повністю закриває
+    if (videoModalClose) videoModalClose.addEventListener('click', closeVideoModal);
+
+    // НОВА ПОВЕДІНКА: клік по фону — ПАУЗА, а не закриття
+    // (щоб дитина, яка повторює рухи і випадково клікнула, не втратила відео)
+    if (videoModalBackdrop) {
+        videoModalBackdrop.addEventListener('click', () => {
+            pauseModalVideo();
+            // Коротко моргаємо кнопкою закриття, щоб підказати що вікно ще відкрите
+            videoModalClose.style.transform = 'scale(1.3)';
+            setTimeout(() => videoModalClose.style.transform = '', 300);
+        });
+    }
+
+    // Escape — закриває повністю
+    document.addEventListener('keydown', (e) => {
+        if (e.key === 'Escape' && videoModal && videoModal.classList.contains('active')) {
+            closeVideoModal();
+        }
+    });
+
+    // ---- Кнопка Share ----
+    if (videoModalShare) {
+        videoModalShare.addEventListener('click', () => {
+            if (!currentModalDance) return;
+            const base = window.location.origin + window.location.pathname.replace(/[^/]*$/, '');
+            const url = `${base}${currentModalDance.page}?jump=${encodeURIComponent(currentModalDance.origName)}`;
+            navigator.clipboard?.writeText(url).then(() => {
+                showToast('✓ Посилання скопійовано!');
+            }).catch(() => {
+                // Fallback для старих браузерів
+                const ta = document.createElement('textarea');
+                ta.value = url; ta.style.position = 'fixed'; ta.style.opacity = '0';
+                document.body.appendChild(ta); ta.select();
+                document.execCommand('copy');
+                document.body.removeChild(ta);
+                showToast('✓ Посилання скопійовано!');
+            });
+        });
+    }
+
+    // ---- Кнопка Улюблене у модалі ----
+    if (videoModalFav) {
+        videoModalFav.addEventListener('click', () => {
+            if (!currentModalDance) return;
+            const nowFav = toggleFavourite(currentModalDance.yt);
+            updateFavButton(currentModalDance.yt);
+            showToast(nowFav ? '♥ Додано до улюблених' : '♡ Видалено з улюблених');
+            // Оновлюємо серце на картці на сторінці (якщо є)
+            const cardBtn = document.querySelector(`.fav-btn[data-yt="${currentModalDance.yt}"]`);
+            if (cardBtn) {
+                cardBtn.textContent = nowFav ? '♥' : '♡';
+                cardBtn.classList.toggle('is-fav', nowFav);
+            }
+            // Оновлюємо список улюблених (якщо відкрита панель)
+            renderFavouritesPanel();
+        });
+    }
+
+    // ==========================================
+    // 4. ЗАВАНТАЖЕННЯ ВІДЕО ПО КЛІКУ — відкриває модал
+    // ==========================================
+
+    // Мапи для підпису груп у пошуку (оголошено тут, використовується нижче)
+    // pageLabels і danceDatabase оголошені ВИЩЕ (секція 3б)
+
+    // Додаємо кнопку-серце на кожну картку відео (якщо ще немає)
+    document.querySelectorAll('.video-card').forEach(card => {
+        const placeholder = card.querySelector('.video-placeholder');
+        if (!placeholder) return;
+        const ytId = placeholder.dataset.youtubeId;
+        if (!ytId) return;
+
+        // Не дублюємо кнопку
+        if (card.querySelector('.fav-btn')) return;
+
+        const favBtn = document.createElement('button');
+        favBtn.className = 'fav-btn';
+        favBtn.dataset.yt = ytId;
+        favBtn.setAttribute('aria-label', 'Додати до улюблених');
+        favBtn.setAttribute('title', 'Улюблене');
+        const isFav = isFavourite(ytId);
+        favBtn.textContent = isFav ? '♥' : '♡';
+        if (isFav) favBtn.classList.add('is-fav');
+
+        favBtn.addEventListener('click', (e) => {
+            e.stopPropagation(); // Не відкриваємо модал
+            const nowFav = toggleFavourite(ytId);
+            favBtn.textContent = nowFav ? '♥' : '♡';
+            favBtn.classList.toggle('is-fav', nowFav);
+            favBtn.setAttribute('aria-label', nowFav ? 'Видалити з улюблених' : 'Додати до улюблених');
+            // Якщо цей танець відкритий у модалі — оновлюємо кнопку там теж
+            if (currentModalDance?.yt === ytId) updateFavButton(ytId);
+            renderFavouritesPanel();
+        });
+
+        card.style.position = 'relative';
+        card.appendChild(favBtn);
+    });
+
+    // Клік по відео — відкриває модал
+    document.querySelectorAll('.video-placeholder').forEach(placeholder => {
+        placeholder.addEventListener('click', () => {
+            const ytId = placeholder.dataset.youtubeId;
+            if (!ytId) return;
+
+            // BUG FIX: беремо поточний перекладений текст (innerText), а НЕ dataset.origText
+            const card = placeholder.closest('.video-card');
+            const titleEl = card?.querySelector('.card-title');
+            const displayTitle = titleEl ? titleEl.innerText.trim() : '';
+
+            // Знаходимо оригінальну (укр.) назву для генерації share-посилання
+            const dbEntry = danceDatabase.find(d => d.yt === ytId);
+            const dance = dbEntry
+                ? { yt: ytId, origName: dbEntry.name, page: dbEntry.page }
+                : { yt: ytId, origName: displayTitle, page: '' };
+
+            openVideoModal(ytId, displayTitle, dance);
+        });
+
+        placeholder.setAttribute('role', 'button');
+        placeholder.setAttribute('tabindex', '0');
+        placeholder.addEventListener('keydown', (e) => {
+            if (e.key === 'Enter' || e.key === ' ') {
+                e.preventDefault();
+                placeholder.click();
+            }
+        });
+    });
+
+    // ==========================================
+    // 4б. ПАНЕЛЬ "МОЇ ТАНЦІ" (Улюблені)
+    // ==========================================
+
+    // Вставляємо кнопку "Мої танці" у панель пошуку (один раз)
+    const favPanelBtn = document.createElement('button');
+    favPanelBtn.id = 'fav-panel-btn';
+    favPanelBtn.setAttribute('aria-label', 'Мої улюблені танці');
+    favPanelBtn.innerHTML = `<span id="fav-panel-btn-icon">♥</span> <span data-i18n="my_dances">Мої танці</span>`;
+
+    const favPanel = document.createElement('div');
+    favPanel.id = 'fav-panel';
+    favPanel.className = 'd-none';
+    favPanel.setAttribute('role', 'region');
+    favPanel.setAttribute('aria-label', 'Улюблені танці');
+
+    // Додаємо у search-container, якщо є
+    if (searchContainer) {
+        searchContainer.appendChild(favPanelBtn);
+        searchContainer.appendChild(favPanel);
+    }
+
+    // Додаємо переклад для нової кнопки
+    if (translations.uk) translations.uk.my_dances = 'Мої танці';
+    if (translations.en) translations.en.my_dances = 'My Dances';
+    if (translations.fr) translations.fr.my_dances = 'Mes Danses';
+
+    function renderFavouritesPanel() {
+        if (!favPanel) return;
+        const favs = getFavourites();
+        favPanel.innerHTML = '';
+
+        if (favs.length === 0) {
+            favPanel.innerHTML = `<p class="text-muted text-center py-2 mb-0" style="font-size:0.85rem;">
+                ${currentLang === 'uk' ? 'Натисни ♡ на відео, щоб зберегти' :
+                  currentLang === 'en' ? 'Tap ♡ on a video to save it' :
+                  'Appuie sur ♡ pour sauvegarder'}</p>`;
+            return;
+        }
+
+        const list = document.createElement('div');
+        list.className = 'list-group';
+
+        favs.forEach(ytId => {
+            const dbEntry = danceDatabase.find(d => d.yt === ytId);
+            if (!dbEntry) return;
+
+            const displayName = processDanceName(dbEntry.name, currentLang);
+            const groupLabel = pageLabels[dbEntry.page]?.[currentLang] || '';
+
+            const item = document.createElement('div');
+            item.className = 'list-group-item list-group-item-action d-flex align-items-center';
+            item.setAttribute('tabindex', '0');
+            item.innerHTML = `<img src="https://img.youtube.com/vi/${ytId}/default.jpg"
+                                   class="search-preview" alt="" loading="lazy">
+                              <div class="flex-grow-1 overflow-hidden">
+                                  <div class="fw-bold dance-name">${displayName}</div>
+                                  ${groupLabel ? `<span class="group-badge">${groupLabel}</span>` : ''}
+                              </div>
+                              <button class="fav-remove-btn" data-yt="${ytId}" aria-label="Видалити з улюблених" title="Видалити">✕</button>`;
+
+            item.addEventListener('click', (e) => {
+                if (e.target.classList.contains('fav-remove-btn')) return;
+                const dance = { yt: ytId, origName: dbEntry.name, page: dbEntry.page };
+                openVideoModal(ytId, displayName, dance);
+            });
+
+            item.querySelector('.fav-remove-btn').addEventListener('click', (e) => {
+                e.stopPropagation();
+                toggleFavourite(ytId); // Видаляємо
+                const cardBtn = document.querySelector(`.fav-btn[data-yt="${ytId}"]`);
+                if (cardBtn) { cardBtn.textContent = '♡'; cardBtn.classList.remove('is-fav'); }
+                if (currentModalDance?.yt === ytId) updateFavButton(ytId);
+                renderFavouritesPanel();
+            });
+
+            list.appendChild(item);
+        });
+
+        favPanel.appendChild(list);
+    }
+
+    let favPanelOpen = false;
+    if (favPanelBtn) {
+        favPanelBtn.addEventListener('click', () => {
+            favPanelOpen = !favPanelOpen;
+            favPanel.classList.toggle('d-none', !favPanelOpen);
+            if (favPanelOpen) {
+                searchResults.classList.add('d-none'); // Ховаємо результати пошуку
+                renderFavouritesPanel();
+            }
+        });
+    }
+
+    // ==========================================
+    // 5. КНОПКА "НАВЕРХ"
+    // ==========================================
+    const scrollTopBtn = document.getElementById('scrollToTopBtn');
+    if (scrollTopBtn) {
+        window.addEventListener('scroll', () => {
+            scrollTopBtn.classList.toggle('show', window.pageYOffset > 200);
+        }, { passive: true });
+        scrollTopBtn.addEventListener('click', () => window.scrollTo({ top: 0, behavior: 'smooth' }));
+    }
+
+    // ==========================================
+    // 6. ПЕРЕМИКАЧ ТЕМ
+    // ==========================================
+    const lightThemeBtn = document.getElementById('light-theme-btn');
+    const darkThemeBtn = document.getElementById('dark-theme-btn');
+    const themeIconContainer = document.getElementById('theme-icon-container');
+
+    const sunIcon = `<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-sun" viewBox="0 0 16 16"><path d="M8 11a3 3 0 1 1 0-6 3 3 0 0 1 0 6zm0 1a4 4 0 1 0 0-8 4 4 0 0 0 0 8zM8 0a.5.5 0 0 1 .5.5v2a.5.5 0 0 1-1 0v-2A.5.5 0 0 1 8 0zm0 13a.5.5 0 0 1 .5.5v2a.5.5 0 0 1-1 0v-2A.5.5 0 0 1 8 13zm8-5a.5.5 0 0 1-.5.5h-2a.5.5 0 0 1 0-1h2a.5.5 0 0 1 .5.5zM3 8a.5.5 0 0 1-.5.5h-2a.5.5 0 0 1 0-1h2A.5.5 0 0 1 3 8zm10.657-5.657a.5.5 0 0 1 0 .707l-1.414 1.415a.5.5 0 1 1-.707-.708l1.414-1.414a.5.5 0 0 1 .707 0zm-9.193 9.193a.5.5 0 0 1 0 .707L3.05 13.657a.5.5 0 0 1-.707-.707l1.414-1.414a.5.5 0 0 1 .707 0zm9.193 2.121a.5.5 0 0 1-.707 0l-1.414-1.414a.5.5 0 0 1 .707-.707l1.414 1.414a.5.5 0 0 1 0 .707zM4.464 4.465a.5.5 0 0 1-.707 0L2.343 3.05a.5.5 0 1 1 .707-.707l1.414 1.414a.5.5 0 0 1 0 .708z"/></svg>`;
+    const moonIcon = `<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-moon-stars" viewBox="0 0 16 16"><path d="M6 .278a.768.768 0 0 1 .08.858 7.208 7.208 0 0 0-.878 3.46c0 4.021 3.278 7.277 7.318 7.277.527 0 1.04-.055 1.533-.16a.787.787 0 0 1 .81.316.733.733 0 0 1-.031.893A8.349 8.349 0 0 1 8.344 16C3.734 16 0 12.286 0 7.71 0 4.266 2.114 1.312 5.124.06A.752.752 0 0 1 6 .278zM10.794 3.148a.217.217 0 0 1 .412 0l.387 1.162h1.234a.217.217 0 0 1 .153.372l-.986.754.387 1.162a.217.217 0 0 1-.316.242l-.986-.754-.986.754a.217.217 0 0 1-.316-.242l.387-1.162-.986-.754a.217.217 0 0 1 .153-.372h1.234l.387-1.162zM13.863.099a.145.145 0 0 1 .274 0l.258.774c.115.346.386.617.732.732l.774.258a.145.145 0 0 1 0 .274l-.774.258a1.156 1.156 0 0 0-.732.732l-.258.774a.145.145 0 0 1-.274 0l-.258-.774a1.156 1.156 0 0 0-.732-.732l-.774-.258a.145.145 0 0 1 0-.274l.774-.258c.346-.115.617-.386.732-.732L13.863.1z"/></svg>`;
+
+    const updateTheme = (theme) => {
+        if (theme === 'dark') {
+            document.body.classList.add('dark-theme');
+            if (themeIconContainer) themeIconContainer.innerHTML = moonIcon;
+        } else {
+            document.body.classList.remove('dark-theme');
+            if (themeIconContainer) themeIconContainer.innerHTML = sunIcon;
+        }
+        localStorage.setItem('theme', theme);
+    };
+
+    updateTheme(currentTheme);
+    if (lightThemeBtn) lightThemeBtn.addEventListener('click', () => updateTheme('light'));
+    if (darkThemeBtn) darkThemeBtn.addEventListener('click', () => updateTheme('dark'));
 
     // Тріграми для нечіткого пошуку
     function getTrigrams(str) {
@@ -595,13 +869,19 @@ document.addEventListener('DOMContentLoaded', () => {
                         item.className = 'list-group-item list-group-item-action d-flex align-items-center';
                         item.setAttribute('tabindex', '0');
                         item.setAttribute('role', 'option');
+                        // BUG FIX: беремо вже перекладену/транслітеровану назву, а НЕ origText
                         const displayName = processDanceName(dance.name, currentLang);
+                        const groupLabel = pageLabels[dance.page]?.[currentLang] || '';
                         item.innerHTML = `<img src="https://img.youtube.com/vi/${dance.yt}/default.jpg" class="search-preview" alt="" loading="lazy">
-                                          <span class="dance-name fw-bold">${displayName}</span>`;
+                                          <div class="flex-grow-1 overflow-hidden">
+                                              <div class="dance-name fw-bold">${displayName}</div>
+                                              ${groupLabel ? `<span class="group-badge">${groupLabel}</span>` : ''}
+                                          </div>`;
 
-                        // НОВА ЛОГІКА: клік у пошуку відкриває модал замість переходу на сторінку
+                        // Відкриваємо модал з повним об'єктом dance, щоб Share і Fav працювали
                         const openResult = () => {
-                            openVideoModal(dance.yt, displayName);
+                            const danceObj = { yt: dance.yt, origName: dance.name, page: dance.page };
+                            openVideoModal(dance.yt, displayName, danceObj);
                             searchContainer.classList.add('d-none');
                             searchInput.value = '';
                             searchResults.innerHTML = '';
